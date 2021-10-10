@@ -8,7 +8,8 @@ export default class exercise extends Component {
         this.state = {
             timeID: null,           //Идентификатор таймера 
             step: 0,                //Шаг выполнения отсчета таймера 
-            countDown: 0
+            countDown: 0,
+            items: []
         }
         this.startTimer = this.startTimer.bind(this)
     }
@@ -39,8 +40,11 @@ export default class exercise extends Component {
         this.threads.map(elem => elem.stop(0));
         this.threads = [];
     }
-    componentDidMount() {
-        this.props.fetchQuery();
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            items: props.resource.posts.read()
+        }
     }
     componentWillUnmount() {
         clearTimeout(this.state.timeID);
@@ -100,14 +104,14 @@ export default class exercise extends Component {
         this.state.timeID || this.start()
     }
     render() {
-        const { items, isLoad, error } = this.props.data;
-        if (error)
-            return <p>Ошибка: {error}</p>
-        else if (!isLoad) {
-            return <p>Дождитесь окончания загрузки</p>
+        try {
+            if (this.state.items === "error") 
+                throw new Error("Не удается поключиться к json-файлу")
+        } catch (e) {
+            return <p>{e.message}</p>
         }
-        this.item = items.filter(value => value.link === this.props.match.params.id)[0]
-        if (items && !this.item) //Проверка на наличие упражнения, указанного в параметре id адресной строки
+        this.item = this.state.items.filter(value => value.link === this.props.match.params.id)[0]
+        if (this.items && !this.item) //Проверка на наличие упражнения, указанного в параметре id адресной строки
             return (
                 <>
                     <p>Данного упражнения не существует</p>
@@ -132,13 +136,10 @@ export default class exercise extends Component {
                             </div>
                         </div>
                     : ""}
-                    
-                    
+
                     <button className="btn btn-primary" onClick={this.startTimer}>▷ Запустить</button>
                     <button className="btn btn-primary ms-3" disabled>❚❚ Приостановить</button>
-                </div>
-                
-                
+                </div>  
             </div>
         )
     }

@@ -1,8 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.esm.js';
+import React, { Suspense, Component } from "react";
 import Navigation from './components/nav';
-import ListPE from './components/listEx';
 import Exercise from "./components/exercise"
+import ListPE from "./components/listEx"
+import UseResource from "./resources"
+import PreloadExercises from './components/preloadExercises';
+
 import "./index.css"
 import {
   BrowserRouter as Router,
@@ -10,7 +14,7 @@ import {
   Route
 } from "react-router-dom";
 
-import React, { Component } from 'react'
+const resource = UseResource()
 
 export default class App extends Component {
   constructor(props) {
@@ -19,32 +23,10 @@ export default class App extends Component {
       posSlider: 0,           //Положение слайдера, определенный CSS-свойством transform: translateX
       error: null,            //Информация об ошибках в результате запроса JSON
       isLoad: false,          //Состояние выполнения запроса загрузки
-      items: []               //Результат получения JSON-объекта  
     };
     this.transformItem = this.transformItem.bind(this);
-    this.fetchQuery = this.fetchQuery.bind(this) 
   }
-  fetchQuery() {
-    const src = "http://localhost:8080/exercises";
-    fetch(src).then(result => {
-      if (!result.ok)
-        throw new Error("Не удается получить доступ к JSON-файлу")
-      return result.json()
-    })
-      .then(
-        resolved => {
-          this.setState({
-              items: resolved,
-              isLoad: true
-          })
-      })
-      .catch( err => {
-        this.setState({
-          isLoad: true,
-          error: "Не удается получить доступ к JSON-файлу"
-        })
-      })
-  }
+  
   transformItem(e) {
     const widthItem = 316; //Ширина блока слайдера
     const cardWrap = document.querySelectorAll(".list-exercises .card-wrapper");
@@ -77,14 +59,20 @@ export default class App extends Component {
           <Switch>
             <Route exact path="/" 
               render = {
-                (props) => <ListPE {...props} pos={this.state.posSlider} fetchQuery={this.fetchQuery} data={this.state} />
+                (props) => 
+                  <Suspense fallback={<PreloadExercises />}>
+                    <ListPE {...props} pos={this.state.posSlider} resource={resource} />      
+                  </Suspense> 
               } 
             />
             <Route path="/exercise/:id" 
               render = {
-                (props) => <Exercise {...props} fetchQuery={this.fetchQuery} data={this.state} />
+                (props) => 
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <Exercise {...props} resource={resource} />
+                  </Suspense>
               } 
-            />
+            />  
             <Route component={ () => <p>NotFound</p> } />
           </Switch>
         </Router>

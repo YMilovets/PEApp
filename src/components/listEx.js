@@ -5,11 +5,15 @@ export default class listEx extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pos: props.pos
+            pos: props.pos,
+            items: []
         }
     }
-    componentDidMount() {
-        this.props.fetchQuery()  
+    //Записать состояние items из props и отслеживать изменение props.resource
+    static getDerivedStateFromProps(props, state) {
+        return {
+            items: props.resource.posts.read()
+        }
     }
     componentDidUpdate(prevProps) {
         //Сравнение текущего props с предыдущим значением
@@ -19,17 +23,19 @@ export default class listEx extends Component {
         }
     }
     render() {
-        const {error, isLoad, items} = this.props.data;
+        try {
+            if (this.items === "error") 
+                throw new Error("Не удается поключиться к json-файлу")
+        } catch (e) {
+            return <p>{e.message}</p>
+        }
         const styles = {
             transform: `translateX(${this.state.pos}px)`
         }
-
         return (
             <div style={styles} className="list-exercises">
-                {!isLoad && <p>Дождитесь окончания загрузки</p>}
-                {error && <p>Ошибка: {error}</p>}
                 <div className="g-4 mt-2 d-inline-flex overflow-hidden card-deck">
-                    { items.map((item, i) => <Card key={i} item={item} /> ) }
+                    { this.state.items.map((item, i) => <Card key={i} item={item} /> ) }
                 </div>
             </div>
         )

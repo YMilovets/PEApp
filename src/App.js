@@ -9,7 +9,7 @@ import PreloadExercises from './components/preloadExercises';
 
 import "./index.css"
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
@@ -54,6 +54,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="AppFitness overflow-hidden p-4">
+
         <Router>
           <Navigation transition={this.transformItem}/>
           <Switch>
@@ -76,6 +77,7 @@ export default class App extends Component {
             <Route component={ () => <p>NotFound</p> } />
           </Switch>
         </Router>
+
       </div>
     )
   }

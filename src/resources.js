@@ -4,7 +4,7 @@ export default function UseResource() {
     }
 }
 function fetchPosts() {
-    const src = "http://ymilovets.github.com/PEApp/exercises.json";
+    const src = "https://ymilovets.github.io/PEApp/exercises.json";
     return fetch(src).then(result => result.json()); 
 }
 function wrapPromise(promise) {

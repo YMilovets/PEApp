@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import Card from "./card"
+import { withRouter } from './HOC/withRouter';
+import FilterSearch from "./filterSearch";
 
-export default class listEx extends Component {
+class ListEx extends Component {
     constructor(props) {
         super(props);
         this.state = {
             pos: props.pos,
-            items: []
+            items: [],
+            search: ""
         }
     }
     //Записать состояние items из props и отслеживать изменение props.resource
@@ -17,14 +20,20 @@ export default class listEx extends Component {
     }
     componentDidUpdate(prevProps) {
         //Сравнение текущего props с предыдущим значением
-        if (this.props.pos !== prevProps.pos) {
+        if (this.props !== prevProps) {
             let position = this.props.pos
             this.setState({pos: position})
+
+            const {searchParams} = this.props;
+            this.setState({
+                search: searchParams.get("query")
+            });
         }
     }
+
     render() {
         try {
-            if (this.items === "error") 
+            if (this.state.items === "error") 
                 throw new Error("Не удается поключиться к json-файлу")
         } catch (e) {
             return <p>{e.message}</p>
@@ -33,11 +42,21 @@ export default class listEx extends Component {
             transform: `translateX(${this.state.pos}px)`
         }
         return (
-            <div style={styles} className="list-exercises">
-                <div className="g-4 mt-2 d-inline-flex overflow-hidden card-deck">
-                    { this.state.items.map((item, i) => <Card key={i} item={item} /> ) }
+            <>
+                <FilterSearch {...this.props} />
+                <div style={styles} className="list-exercises">
+                    <div className="g-4 mt-3 d-inline-flex overflow-hidden card-deck">
+                        { 
+                            this.state.items
+                                .filter( post => post.title.includes(this.state.search) ) 
+                                .map((item, i) => <Card key={i} item={item} /> ) 
+                        }
+                    </div>
                 </div>
-            </div>
+            </>
+
         )
     }
 }
+
+export default withRouter(ListEx);

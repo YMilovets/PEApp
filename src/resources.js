@@ -12,7 +12,6 @@ function wrapPromise(promise) {
     const suspender = promise.then( r => {
         result = r;
         status = "success"
-
     }).catch( e => {
         result = "Не удается поключиться к json-файлу";
         status = "error"   
@@ -22,13 +21,15 @@ function wrapPromise(promise) {
         read() {
             switch (status) {
                 case "pending":
-                throw suspender;
+                    console.log(status);
+                    throw suspender;
                 case "error":
-                return status;
+                    return status;
                 case "success":
-                return result;
+                    console.log(result);
+                    return result;
                 default:
-                throw suspender;
+                    throw suspender;
             }
         }
     }

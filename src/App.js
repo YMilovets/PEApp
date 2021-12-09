@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.esm.js';
 import React, { Suspense, Component } from "react";
-import Navigation from './components/nav';
 import Exercise from "./components/exercise"
 import ListPE from "./components/listEx"
 import UseResource from "./resources"
@@ -10,9 +9,10 @@ import PreloadExercises from './components/preloadExercises';
 import "./index.css"
 import {
   HashRouter as Router,
-  Switch,
+  Routes as Switch,
   Route
 } from "react-router-dom";
+import { Layout } from './components/layout';
 
 const resource = UseResource()
 
@@ -51,33 +51,33 @@ export default class App extends Component {
       } 
     })
   }
+
   render() {
     return (
       <div className="AppFitness overflow-hidden p-4">
-
         <Router>
-          <Navigation transition={this.transformItem}/>
           <Switch>
-            <Route exact path="/" 
-              render = {
-                (props) => 
+            <Route path="/" element={
+              <Layout transformItem={this.transformItem} />
+            } >
+              <Route index 
+                element = {
                   <Suspense fallback={<PreloadExercises />}>
-                    <ListPE {...props} pos={this.state.posSlider} resource={resource} />      
+                    <ListPE pos={this.state.posSlider} resource={resource} />      
                   </Suspense> 
-              } 
-            />
-            <Route path="/exercise/:id" 
-              render = {
-                (props) => 
+                } 
+              />
+              <Route path="exercise/:id" 
+                element = {
                   <Suspense fallback={<p>Loading...</p>}>
-                    <Exercise {...props} resource={resource} />
+                    <Exercise resource={resource} />
                   </Suspense>
-              } 
-            />  
-            <Route component={ () => <p>NotFound</p> } />
+                } 
+              />  
+              <Route path="*" element={ <p>NotFound</p> } />
+            </Route>
           </Switch>
         </Router>
-
       </div>
     )
   }

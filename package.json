@@ -1,6 +1,6 @@
 {
   "name": "lesson_01",
-  "homepage": "http://ymilovets.github.io/PEApp",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,7 +14,7 @@
     "react-bootstrap": "^1.6.1",
     "react-dom": "^17.0.2",
     "react-error-boundary": "^3.1.3",
-    "react-router-dom": "^5.3.0",
+    "react-router-dom": "^6.0.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
   },

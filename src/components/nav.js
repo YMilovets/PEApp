@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default class Navigation extends Component {
     //Конструктор класса для определения его состояния
@@ -25,6 +25,9 @@ export default class Navigation extends Component {
         //Определяем длину всплывающего меню и добавляем его в CSS-переменную
         root.style.setProperty('--collapse-height', this.collapse.current.clientHeight + "px");
     }
+    aboutIsActive(isActive, classNames) {
+        return `${classNames} ${isActive && "disabled"}`
+    }
     render() {
         return (
             <>
@@ -46,7 +49,12 @@ export default class Navigation extends Component {
                 </nav>
                 <div className={(this.state.clicked) ? "active compact-menu" : "compact-menu" } id="collapse-menu">
                     <ul className="navbar-nav" ref={this.collapse}>
-                        <li className="nav-item"><Link className="nav-link" to="/about">О приложении</Link></li>
+                        <li className="nav-item">
+                            <NavLink 
+                                className={ ({ isActive }) => 
+                                    this.aboutIsActive(isActive, "nav-link")} 
+                                to="about">О приложении</NavLink>
+                        </li>
                     </ul>
                 </div>
             </>

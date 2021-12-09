@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom"
+import { withRouter } from "../components/HOC/withRouter";
 
-export default class exercise extends Component {
+class Exercise extends Component {
     constructor(props) {
         super(props);
         this.threads = [];          //Массив звуковых потоков
@@ -110,8 +111,9 @@ export default class exercise extends Component {
         } catch (e) {
             return <p>{e.message}</p>
         }
-        this.item = this.state.items.filter(value => value.link === this.props.match.params.id)[0]
-        if (this.items && !this.item) //Проверка на наличие упражнения, указанного в параметре id адресной строки
+        
+        this.item = this.state.items.filter(value => value.link === this.props.params.id)[0]
+        if (!this.item) //Проверка на наличие упражнения, указанного в параметре id адресной строки
             return (
                 <>
                     <p>Данного упражнения не существует</p>
@@ -144,3 +146,7 @@ export default class exercise extends Component {
         )
     }
 }
+
+export default withRouter(Exercise, () => {
+    
+});

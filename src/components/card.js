@@ -10,7 +10,7 @@ export default class card extends Component {
                     <div className="card-body">
                         <h5 className="card-title">{item.title}</h5>
                         <p className="card-text">{item.action}</p>
-                        <Link to={"/exercise/" + item.link} className="btn btn-primary">Выбрать</Link>
+                        <Link to={"exercise/" + item.link} className="btn btn-primary">Выбрать</Link>
                     </div>
                 </div>
             </div>

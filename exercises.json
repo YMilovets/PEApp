@@ -7,7 +7,7 @@
         "time_progress": 10,
         "time_pause": 2,
         "delta_time": 0.15,
-        "img": "/images/01.png"
+        "img": "./images/01.png"
     },
     {
         "title": "Боковые растяжки",
@@ -17,7 +17,7 @@
         "time_progress": 7,
         "time_pause": 3,
         "delta_time": 0.15,
-        "img": "/images/02.png"
+        "img": "./images/02.png"
     },
     {
         "title": "Пожимания плечами",
@@ -27,7 +27,7 @@
         "time_progress": 5,
         "time_pause": 1,
         "delta_time": 0.15,
-        "img": "/images/03.png"
+        "img": "./images/03.png"
     },
     {
         "title": "Наклоны головы по бокам",
@@ -37,7 +37,7 @@
         "time_progress": 5,
         "time_pause": 2,
         "delta_time": 0.15,
-        "img": "/images/04.png"
+        "img": "./images/04.png"
     },
     {
         "title": "Круговые вращения руками",
@@ -47,7 +47,7 @@
         "time_progress": 4,
         "time_pause": 0,
         "delta_time": 0.15,
-        "img": "/images/05.png"
+        "img": "./images/05.png"
     },
     {
         "title": "Ретракция шеи",
@@ -57,7 +57,7 @@
         "time_progress": 5,
         "time_pause": 1,
         "delta_time": 0.15,
-        "img": "/images/06.png"
+        "img": "./images/06.png"
     },
     {
         "title": "Сгибание шеи",
@@ -67,6 +67,6 @@
         "time_progress": 5,
         "time_pause": 1,
         "delta_time": 0.1,
-        "img": "/images/07.png"
+        "img": "./images/07.png"
     }
 ]

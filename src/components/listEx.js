@@ -18,15 +18,23 @@ class ListEx extends Component {
             items: props.resource.posts.read()
         }
     }
+    componentDidMount() {
+        //Сравнение текущего props с предыдущим значением
+        const {searchParams} = this.props;
+        //Для хранения состояния поиска убираем чувствительность регистра
+        this.setState({
+            search: searchParams.get("query") ? searchParams.get("query").toLowerCase() : ""
+        });
+    }
     componentDidUpdate(prevProps) {
         //Сравнение текущего props с предыдущим значением
         if (this.props !== prevProps) {
             let position = this.props.pos
             this.setState({pos: position})
-
             const {searchParams} = this.props;
+            //Для хранения состояния поиска убираем чувствительность регистра
             this.setState({
-                search: searchParams.get("query")
+                search: searchParams.get("query") ? searchParams.get("query").toLowerCase() : ""
             });
         }
     }
@@ -34,7 +42,7 @@ class ListEx extends Component {
     render() {
         try {
             if (this.state.items === "error") 
-                throw new Error("Не удается поключиться к json-файлу")
+                throw new Error("Не удается подключиться к json-файлу")
         } catch (e) {
             return <p>{e.message}</p>
         }
@@ -48,7 +56,7 @@ class ListEx extends Component {
                     <div className="g-4 mt-3 d-inline-flex overflow-hidden card-deck">
                         { 
                             this.state.items
-                                .filter( post => post.title.includes(this.state.search) ) 
+                                .filter( post => post.title.toLowerCase().includes(this.state.search) || !this.state.search ) 
                                 .map((item, i) => <Card key={i} item={item} /> ) 
                         }
                     </div>

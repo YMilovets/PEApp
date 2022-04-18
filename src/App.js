@@ -28,7 +28,10 @@ export default class App extends Component {
   }
   
   transformItem(e) {
+    e.preventDefault();
     const widthItem = 316; //Ширина блока слайдера
+    const displayWidth = document.querySelector(".list-exercises").getBoundingClientRect().width;
+    const marginItem = 16;
     const cardWrap = document.querySelectorAll(".list-exercises .card-wrapper");
     this.arrow = (e.target.classList.contains("slider_right")) ? "right": "left";
     let position = 0; //Результат смещения позиции слайдов, определенный направлением перемещения
@@ -41,7 +44,9 @@ export default class App extends Component {
     } //Если нажата кнопка "Сдвинуть влево"
     else {
       //Ограничение конечного значения положения слайдера для сдвига влево
-      if ( this.state.posSlider <= -(cardWrap.length - 1) * widthItem )
+      //Определим ширину максимального количества элементов слайдера, помещающихся на странице
+      const maxDisplayWidthItemOfList = Math.trunc(displayWidth / widthItem) * (widthItem + marginItem);
+      if ( -this.state.posSlider >= cardWrap.length * widthItem - maxDisplayWidthItemOfList )
         position = 0;
       else position = -widthItem
     }

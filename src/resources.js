@@ -4,7 +4,7 @@ export default function UseResource() {
     }
 }
 function fetchPosts() {
-    const src = "https://ymilovets.github.io/PEApp/exercises.json";
+    const src = "https://ymilovets.github.io/storageJSON/exercises.json";
     return fetch(src).then(result => result.json()); 
 }
 function wrapPromise(promise) {
@@ -21,12 +21,10 @@ function wrapPromise(promise) {
         read() {
             switch (status) {
                 case "pending":
-                    console.log(status);
                     throw suspender;
                 case "error":
                     return status;
                 case "success":
-                    console.log(result);
                     return result;
                 default:
                     throw suspender;

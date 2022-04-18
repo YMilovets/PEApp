@@ -10,7 +10,7 @@ export default function FilterSearch(props) {
     }
     const handleReset = () => props.setSearchParams({query: ""});
     return (
-        <form className="d-flex mt-3 position-relative" autoComplete="off">
+        <form onSubmit={null} className="d-flex mt-3 position-relative" autoComplete="off">
             <input placeholder="Начните вводить название упражнения" 
                 onChange={handleSubmit} 
                 className="form-control" 

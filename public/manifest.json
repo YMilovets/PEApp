@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "PEApp",
+  "name": "PEApp is a physical exercises for neck muscles",
   "icons": [
     {
       "src": "favicon.ico",

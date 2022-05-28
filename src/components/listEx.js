@@ -59,6 +59,15 @@ class ListEx extends Component {
                                 .filter( post => post.title.toLowerCase().includes(this.state.search) || !this.state.search ) 
                                 .map((item, i) => <Card key={i} item={item} /> ) 
                         }
+                        {this.state.items
+                            .filter( 
+                                post => 
+                                    post.title
+                                        .toLowerCase()
+                                        .includes(this.state.search)
+                            )
+                            .length > 0 || <p>Ничего <b>не</b> найдено. Попробуйте ввести новый поисковой запрос.</p>
+                        }
                     </div>
                 </div>
             </>

@@ -5,13 +5,20 @@ export default class Navigation extends Component {
     //Конструктор класса для определения его состояния
     constructor(props) {
         super(props);
-        	
         this.collapse = React.createRef();
         //Объект состояния компонента
         this.state = {
-            clicked: false
+            clicked: false,
+            path: props.path,
         }
         this.handleClick = this.handleClick.bind(this);
+    }
+    static getDerivedStateFromProps(props, state) {
+        if (props.path !== state.path)
+            return {
+                path: props.path,
+            }
+        return null;
     }
     handleClick() {
         //Обновление состояния конструктора this.state
@@ -41,11 +48,20 @@ export default class Navigation extends Component {
                             <div className="small">Движение - жизнь</div>
                         </div>
                     </div>
-        
-                    <div>
-                        <button type="submit" className="slider_left btn btn-primary me-2" onClick={this.props.transition}>&lt;</button>
-                        <button type="submit" className="slider_right btn btn-primary" onClick={this.props.transition}>&gt;</button>          
-                    </div>
+                    {this.state.path !== "/" ||
+                        <div>
+                            <button type="submit" 
+                                className="slider_left btn btn-primary me-2" 
+                                onClick={this.props.transition}>
+                                &lt;
+                            </button>
+                            <button type="submit" 
+                                className="slider_right btn btn-primary" 
+                                onClick={this.props.transition}>
+                                &gt;
+                            </button>          
+                        </div>
+                    }  
                 </nav>
                 <div className={(this.state.clicked) ? "active compact-menu" : "compact-menu" } id="collapse-menu">
                     <ul className="navbar-nav" ref={this.collapse}>

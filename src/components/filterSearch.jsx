@@ -7,6 +7,7 @@ export default function FilterSearch(props) {
         const query = e.target.value;
         const {setSearchParams} = props;
         setSearchParams({query});
+        props.setDefaultPos();
     }
     const handleReset = () => props.setSearchParams({query: ""});
     return (

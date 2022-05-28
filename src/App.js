@@ -57,6 +57,12 @@ export default class App extends Component {
     })
   }
 
+  setDefaultPos() {
+    this.setState({
+        posSlider: 0,
+    })
+  }
+
   render() {
     return (
       <div className="AppFitness overflow-hidden p-4">
@@ -68,7 +74,11 @@ export default class App extends Component {
               <Route index 
                 element = {
                   <Suspense fallback={<PreloadExercises />}>
-                    <ListPE pos={this.state.posSlider} resource={resource} />      
+                    <ListPE 
+                      pos={this.state.posSlider} 
+                      resource={resource} 
+                      setDefaultPos={this.setDefaultPos.bind(this)}
+                    />      
                   </Suspense> 
                 } 
               />

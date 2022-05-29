@@ -52,7 +52,7 @@ class ListEx extends Component {
         return (
             <>
                 <FilterSearch {...this.props} />
-                <div style={styles} className="list-exercises">
+                <div style={styles} className="list-exercises mx-4 mb-4">
                     <div className="g-4 mt-3 d-inline-flex overflow-hidden card-deck">
                         { 
                             this.state.items

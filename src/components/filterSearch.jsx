@@ -11,7 +11,11 @@ export default function FilterSearch(props) {
     }
     const handleReset = () => props.setSearchParams({query: ""});
     return (
-        <form onSubmit={null} className="d-flex mt-3 position-relative" autoComplete="off">
+        <form 
+            onSubmit={(e) => { e.preventDefault() }} 
+            className="d-flex mt-1 mx-4 position-relative" 
+            autoComplete="off"
+        >
             <input placeholder="Начните вводить название упражнения" 
                 onChange={handleSubmit} 
                 className="form-control" 

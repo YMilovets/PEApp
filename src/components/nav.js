@@ -38,7 +38,7 @@ export default class Navigation extends Component {
     render() {
         return (
             <>
-                <nav id="navigation" className="navbar navbar-dark">
+                <nav id="navigation" className="navbar navbar-dark mx-4 mt-4">
                     <div className="d-flex">
                         <button onClick={this.handleClick} className="btn bg-primary" type="button" data-toggle="collapse" data-target="#collapse-menu" >
                             <span className="navbar-toggler-icon"></span>
@@ -49,7 +49,7 @@ export default class Navigation extends Component {
                         </div>
                     </div>
                     {this.state.path !== "/" ||
-                        <div>
+                        <div className="slider-btn">
                             <button type="submit" 
                                 className="slider_left btn btn-primary me-2" 
                                 onClick={this.props.transition}>
@@ -65,7 +65,7 @@ export default class Navigation extends Component {
                 </nav>
                 <div className={(this.state.clicked) ? "active compact-menu" : "compact-menu" } id="collapse-menu">
                     <ul className="navbar-nav" ref={this.collapse}>
-                        <li className="nav-item">
+                        <li className="nav-item mx-4">
                             <NavLink 
                                 className={ ({ isActive }) => 
                                     this.aboutIsActive(isActive, "nav-link")} 

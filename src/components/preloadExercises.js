@@ -9,7 +9,7 @@ export default function PreloadExercises() {
         img: "/"
       }
     return (
-        <div className="list-exercises">
+        <div className="list-exercises mx-4">
             <div className="g-4 mt-2 d-inline-flex overflow-hidden card-deck">
                 <Card item={tempItem} /><Card item={tempItem} /><Card item={tempItem} />
             </div>

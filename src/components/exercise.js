@@ -216,9 +216,9 @@ class Exercise extends Component {
                 </>
             )
         return (
-            <div className="d-flex ex-wrap">
+            <div className="d-flex ex-wrap mx-4 mb-4 mt-1">
                 <img className="ex-img-top img-thumbnail" src={this.item.img} alt="Здесь рыбы нет"></img>
-                <div className="ms-3">
+                <div className="ex-wrap-content">
                     <h3>{this.item.title}</h3>
                     <p>{this.item.action}</p>
                     {this.state.timeID || this.state.savedTimeID ? 
@@ -242,7 +242,7 @@ class Exercise extends Component {
                         </>
                     : ""}
 
-                    <div>
+                    <div className="ex-manager-btn">
                         <button 
                             className="btn btn-primary" 
                             disabled={this.state.timeID || this.state.savedTimeID} 
@@ -250,7 +250,7 @@ class Exercise extends Component {
                             ref={this.startBtn}>
                             ▷ Запустить (S)
                         </button>
-                        <button className="btn btn-primary ms-3" 
+                        <button className="btn btn-primary" 
                             disabled={!this.state.timeID && (!this.state.savedTimeID || !this.state.isPaused)} 
                             onClick={this.pauseTimerHandler}
                             ref={this.pauseBtn}>

@@ -65,7 +65,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="AppFitness overflow-hidden p-4">
+      <div className="AppFitness overflow-hidden">
         <Router>
           <Switch>
             <Route path="/" element={
@@ -89,7 +89,7 @@ export default class App extends Component {
                   </Suspense>
                 } 
               />  
-              <Route path="*" element={ <p>NotFound</p> } />
+              <Route path="*" element={ <p className="mx-4">NotFound</p> } />
             </Route>
           </Switch>
         </Router>

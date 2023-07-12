@@ -1,0 +1,3 @@
+.menuIcon, .forwardIcon, .backwardIcon {
+  fill: var(--color-light);
+}

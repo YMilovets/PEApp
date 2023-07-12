@@ -1,0 +1,41 @@
+.inputGroup {
+  border: none;
+  display: flex;
+  flex-direction: row;
+  border-radius: 0.75rem;
+  -webkit-box-shadow: 0px 0px 12px 2px rgba(223, 223, 223, 0.55);
+  -moz-box-shadow: 0px 0px 12px 2px rgba(223, 223, 223, 0.55);
+  box-shadow: 0px 0px 12px 2px rgba(223, 223, 223, 0.55);
+  padding: 0.35em;
+  border: 1px solid #f9f9f9;
+  transition: all 0.25s cubic-bezier(0.47, 0, 0.74, 0.71);
+}
+
+.inputGroup.inputGroupFocused {
+  -webkit-box-shadow: 0px 0px 12px 2px rgba(223, 223, 223, 0.85);
+  -moz-box-shadow: 0px 0px 12px 2px rgba(223, 223, 223, 0.85);
+  box-shadow: 0px 0px 12px 2px rgba(223, 223, 223, 0.85);
+}
+
+.inputLabel {
+  font: 0.875em/1.5em Arial;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #747bff;
+  color: var(--color-light);
+  border-radius: 0.55em;
+  flex: 0 0 155px;
+}
+
+.Input {
+  font: 0.875em/1.5em Arial;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.inputLabel.inputLabelRight {
+  order: 1;
+}

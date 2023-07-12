@@ -1,0 +1,13 @@
+.listExercisesContainer {
+  display: grid;
+  grid-template-columns: repeat(1000, var(--card-width));
+  --card-width: 350px;
+  gap: 2rem;
+  padding: 2.5rem;
+  background: #f9f9f9;
+}
+
+.listExercises {
+  width: 100vw;
+  overflow: hidden;
+}

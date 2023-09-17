@@ -1,23 +1,36 @@
 import {
   combine,
   createEffect,
-  createEvent,
   createStore,
-  restore,
   sample,
 } from "effector";
+import { ExerciseItem, ExerciseItemStore } from "../Types";
+import { getSelectedExerciseEvent, setSliderPos, updateErrorEvent } from "./events";
 
 const getExercisesRequestFx = createEffect(
-  async function getExercisesRequest() {
+  async function getExercisesRequest() {   
     const url = "https://ymilovets.github.io/storageJSON/exercises.json";
     const exercises = await fetch(url);
     return exercises.json();
   }
 );
 
-const updateErrorEvent = createEvent();
-
-const $exerciseStore = restore(getExercisesRequestFx, []);
+const $exerciseStore = createStore<ExerciseItemStore>({
+  listExercise: [],
+  selectedExercise: null,
+  sliderPos: 0,
+})
+  .on(getExercisesRequestFx.doneData, (state, payload) => ({
+    ...state,
+    listExercise: payload,
+  }))
+  .on(setSliderPos, (state, payload) => ({ ...state, sliderPos: payload }))
+  .on(getSelectedExerciseEvent, (state, payload) => ({
+    ...state,
+    selectedExercise: state.listExercise.find(
+      ({ link }: ExerciseItem) => link === payload
+    ) as ExerciseItem,
+  }));
 const $errorStatus = createStore(false).on(updateErrorEvent, () => true);
 
 getExercisesRequestFx();

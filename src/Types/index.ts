@@ -2,7 +2,21 @@ type ExerciseItem = {
   img: string;
   title: string;
   action: string;
-  link: string;
+  link?: string;
+  countRepeat?: number;
+  count_repeat?: number;
+  timeProgress?: number;
+  time_progress?: number;
+  time_pause?: number;
+  timePause?: number;
+  delta_time?: number;
+  deltaTime?: number;
+};
+
+export type ExerciseItemStore = {
+  listExercise: Array<ExerciseItem>;
+  selectedExercise: ExerciseItem | null;
+  sliderPos: number;
 };
 
 type TranslateProp = string | number | symbol;

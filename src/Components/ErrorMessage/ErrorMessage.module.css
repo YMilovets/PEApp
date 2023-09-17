@@ -1,0 +1,8 @@
+.errorContainer {
+    padding: 2rem;
+    background: #f9f9f9;
+}
+
+.errorContainer p {
+    margin-top: 0;
+}

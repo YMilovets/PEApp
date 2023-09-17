@@ -1,7 +1,3 @@
-import { ExerciseItem } from "../../Types";
-
 export interface ExercisesListProps {
-  search: Required<string>;
+  search: Required<string | null>;
 }
-
-export type ExerciseItemStore = Array<ExerciseItem>;

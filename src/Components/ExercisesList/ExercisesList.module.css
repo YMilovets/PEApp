@@ -4,10 +4,11 @@
   --card-width: 350px;
   gap: 2rem;
   padding: 2.5rem;
-  background: #f9f9f9;
+  transition: transform .25s ease;
 }
 
 .listExercises {
   width: 100vw;
   overflow: hidden;
+  background: #f9f9f9;
 }

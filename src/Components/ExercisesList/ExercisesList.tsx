@@ -1,22 +1,18 @@
 import { useStore } from "effector-react";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { translate } from "../../i18n";
-import { $exerciseState, $exerciseStore } from "../../Store/exercise";
+import { $exerciseState } from "../../Store/exercise";
 import Card from "../Card/Card";
-import { ExerciseItemStore, ExercisesListProps } from "./ExercisesList.type";
 import style from "./ExercisesList.module.css";
+import { useClearSearch } from "../../Hooks/useClearSearch";
+import useFilterSlider from "../../Hooks/useFilterSlider";
 
-export default function ExercisesList({ search }: ExercisesListProps) {
-  const items = useStore<ExerciseItemStore>($exerciseStore);
+export default function ExercisesList() {
+  const { itemWithSearchFilter, sliderPos } = useFilterSlider();
+
   const { loading, error } = useStore($exerciseState);
 
-  const itemWithSearchFilter = useMemo(
-    () =>
-      items.filter(
-        (post) => !search || post.title.toLowerCase().includes(search)
-      ),
-    [search, items]
-  );
+  useClearSearch("#global-search");
 
   useEffect(() => {
     if (error)
@@ -26,7 +22,11 @@ export default function ExercisesList({ search }: ExercisesListProps) {
   if (loading) return <p>{translate("NotificationText", "0x001") as string}</p>;
   return (
     <section className={style.listExercises}>
-      <div className={style.listExercisesContainer}>
+      <div
+        style={{ transform: `translateX(${sliderPos}px)` }}
+        id="slider-exercises"
+        className={style.listExercisesContainer}
+      >
         {itemWithSearchFilter.length > 0 ? (
           itemWithSearchFilter.map(({ img, title, action, link }, i) => (
             <Card key={i} img={img} title={title} action={action} link={link} />

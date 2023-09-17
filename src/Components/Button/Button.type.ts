@@ -1,8 +1,13 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
 interface ButtonProp extends ButtonHTMLAttributes<HTMLButtonElement> {
     status?: 'primary' | 'secondary' | 'link';
     isDisabled?: boolean;
 }
 
-export type { ButtonProp };
+interface ButtonWrapper {
+    children: ReactNode;
+    className?: string;
+}
+
+export type { ButtonProp, ButtonWrapper };

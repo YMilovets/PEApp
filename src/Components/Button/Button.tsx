@@ -2,9 +2,13 @@ import { ButtonProp } from "./Button.type";
 import clsx from "clsx";
 import style from "./Button.module.css";
 
-function Button({ children, onClick, className }: ButtonProp) {
+function Button({ children, onClick, className, disabled }: ButtonProp) {
   return (
-    <button className={clsx(style.button, className)} onClick={onClick}>
+    <button
+      disabled={disabled}
+      className={clsx(style.button, className)}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

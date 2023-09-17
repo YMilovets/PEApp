@@ -1,11 +1,17 @@
 import { Outlet } from "react-router-dom";
 import Header from "../Header";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
-export default function Layout() {
+function Layout() {
   return (
     <>
       <Header />
-      <Outlet />
+      <ErrorBoundary FallbackComponent={ErrorMessage}>
+        <Outlet />
+      </ErrorBoundary>
     </>
   );
 }
+
+export default Layout;

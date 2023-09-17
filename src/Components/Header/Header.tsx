@@ -1,16 +1,42 @@
 import clsx from "clsx";
-import { useCallback, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { Link, NavLink, useSearchParams } from "react-router-dom";
 import Button from "../Button";
+import { ButtonWrapper } from "../Button"
 import { BackwardIcon, ForwardIcon, MenuIcon, SearchIcon } from "../Icons";
 import { Input, InputGroup, InputLabel } from "../InputGroup";
 import style from "./Header.module.css";
+import { useEvent } from "effector-react";
+import useSlider from "../../Hooks/useSlider";
+import { setSliderPos } from "../../Store/events";
+import useFilterSlider from "../../Hooks/useFilterSlider";
 
 export default function Header() {
   const [isShowMenu, setIsShowMenu] = useState(false);
   const handleShowMenu = useCallback(() => {
     setIsShowMenu(!isShowMenu);
   }, [isShowMenu]);
+
+  const [, setSearchParams] = useSearchParams();
+  const handleSliderPos = useEvent(setSliderPos);
+
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setSearchParams({ search: e.target.value });
+    handleSliderPos(0);
+  }, [handleSliderPos, setSearchParams])
+
+  const { itemWithSearchFilter } = useFilterSlider();
+  
+  const [xPos, moveLeftSlider, moveRightSlider] = useSlider(
+    itemWithSearchFilter,
+    "slider-exercises",
+    32,
+  );
+
+  useEffect(() => {
+    handleSliderPos(xPos);
+  }, [handleSliderPos, xPos]);
 
   return (
     <header className={style.headerPage}>
@@ -25,7 +51,7 @@ export default function Header() {
           <div className={style.navigationMotto}>Движение - жизнь</div>
         </div>
 
-        <InputGroup>
+        <InputGroup onSubmit={(e) => e.preventDefault()}>
           <InputLabel linkedId="global-search" position="left">
             Найти упражнение
           </InputLabel>
@@ -34,6 +60,7 @@ export default function Header() {
             id="global-search"
             name="global-search"
             type="text"
+            onChange={handleChange}
           />
           <SearchIcon
             className={style.searchInputIcon}
@@ -43,12 +70,24 @@ export default function Header() {
           />
         </InputGroup>
         <div className={style.sliderManager}>
-          <Button status="primary" className={style.sliderManagerBtn}>
-            <BackwardIcon />
-          </Button>
-          <Button status="primary" className={style.sliderManagerBtn}>
-            <ForwardIcon />
-          </Button>
+          <ButtonWrapper>
+            <Button
+              onClick={moveLeftSlider}
+              status="primary"
+              className={style.sliderManagerBtn}
+            >
+              <BackwardIcon />
+            </Button>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
+              onClick={moveRightSlider}
+              status="primary"
+              className={style.sliderManagerBtn}
+            >
+              <ForwardIcon />
+            </Button>
+          </ButtonWrapper>
         </div>
       </nav>
       <nav

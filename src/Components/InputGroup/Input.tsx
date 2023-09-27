@@ -9,6 +9,11 @@ function Input({
   onChange,
   name,
   id,
+  min,
+  max,
+  value,
+  defaultValue,
+  disabled
 }: InputProps) {
   return (
     <input
@@ -18,6 +23,11 @@ function Input({
       onChange={onChange}
       name={name}
       id={id}
+      value={value}
+      min={min}
+      max={max}
+      defaultValue={defaultValue}
+      disabled={disabled}
     />
   );
 }

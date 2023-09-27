@@ -1,0 +1,27 @@
+.spoilerBody.spoilerBodyIsActive {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    max-height: 0;
+    margin-top: 0;
+}
+
+.spoilerBody {
+    transition: all 0.25s ease;
+    --height-spoiler: 500px;
+    max-height: var(--height-spoiler);
+    margin-top: 1em;
+    --spoiler-padding: 0.5rem 0.75rem;
+    --spoiler-border-radius: 0.5rem;
+}
+
+.spoiler {
+    display: flex;
+    flex-direction: column;
+}
+
+.spoilerSwitcher {
+    width: max-content;
+    padding: var(--spoiler-padding);
+    border-radius: var(--spoiler-border-radius);
+}

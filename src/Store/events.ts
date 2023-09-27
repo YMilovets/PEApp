@@ -5,4 +5,11 @@ const getSelectedExerciseEvent = createEvent<string | undefined>();
 
 const setSliderPos = createEvent<number>();
 
-export { getSelectedExerciseEvent, updateErrorEvent, setSliderPos }
+const setDelayExercise = createEvent<number>();
+
+export {
+  getSelectedExerciseEvent,
+  updateErrorEvent,
+  setSliderPos,
+  setDelayExercise,
+};

@@ -5,6 +5,7 @@ import { CycleStatus } from "./types";
 export default function useCycle(
   countRepeats: number,
   timeExercise: number,
+  delayExercise: number,
   timePause = 0,
   deltaTime = 0
 ) {
@@ -13,12 +14,12 @@ export default function useCycle(
   const currentStatus = useRef<CycleStatus>("finished");
   const prevStatus = useRef<CycleStatus>("finished");
 
-  const [status, setStatus] = useState<CycleStatus>("finished");  
-
+  const [status, setStatus] = useState<CycleStatus>("afterLoaded");  
+  
   const { start: pauseStartTime, stop: pauseStop } = useTimer({
     initialTime: timePause + deltaTime * (currentStep.current - 1),
     onTimeOver: () => handleCycle("started"),
-    onTimeStart() {
+    onTimeStart() {      
       currentStatus.current = "paused";
     },
   });
@@ -31,6 +32,15 @@ export default function useCycle(
         currentStatus.current = "started";
         setStatus(currentStatus.current);
       }
+    },
+  });
+
+  const { start: startDelay } = useTimer({
+    initialTime: delayExercise,
+    onTimeOver: () => handleCycle("started"),
+    onTimeStart() {
+      currentStatus.current = "paused";
+      setStatus(currentStatus.current);
     },
   });
 
@@ -74,7 +84,7 @@ export default function useCycle(
   function handleCycle(selectedStatus: CycleStatus) {
     if (currentStep.current < countRepeats) {
       currentStatus.current = selectedStatus;
-
+      
       if (currentStatus.current === "paused") {
         currentStep.current += 1;
         if (currentStep.current < countRepeats) pauseStartTime();
@@ -88,5 +98,12 @@ export default function useCycle(
     setStatus(currentStatus.current);
   }
 
-  return { start, step: currentRepeat, status, time, play };
+  return {
+    start: startDelay,
+    step: currentRepeat,
+    status,
+    time,
+    play,
+    prevStatus,
+  };
 }

@@ -5,7 +5,7 @@ import {
   sample,
 } from "effector";
 import { ExerciseItem, ExerciseItemStore } from "../Types";
-import { getSelectedExerciseEvent, setSliderPos, updateErrorEvent } from "./events";
+import { getSelectedExerciseEvent, setDelayExercise, setSliderPos, updateErrorEvent } from "./events";
 
 const getExercisesRequestFx = createEffect(
   async function getExercisesRequest() {   
@@ -19,6 +19,7 @@ const $exerciseStore = createStore<ExerciseItemStore>({
   listExercise: [],
   selectedExercise: null,
   sliderPos: 0,
+  exerciseDelay: 0,
 })
   .on(getExercisesRequestFx.doneData, (state, payload) => ({
     ...state,
@@ -30,6 +31,10 @@ const $exerciseStore = createStore<ExerciseItemStore>({
     selectedExercise: state.listExercise.find(
       ({ link }: ExerciseItem) => link === payload
     ) as ExerciseItem,
+  }))
+  .on(setDelayExercise, (state, payload) => ({
+    ...state,
+    exerciseDelay: payload,
   }));
 const $errorStatus = createStore(false).on(updateErrorEvent, () => true);
 

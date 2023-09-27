@@ -7,8 +7,8 @@ export function getTimeDisplay(
   time?: number,
   defaultTime: number | string = "-"
 ) {
-  if (status === "finished") return "-";
-  if (status === "paused" || status === "stopped")
+  if (status === "finished" || status === "afterLoaded") return "-";
+  if (status === "paused" || status === "stopped" || time === 0)
     return (
       <PauseIcon
         className={style.exercisePagePauseIcon}

@@ -12,7 +12,7 @@ export default function Exercise() {
   const handleLoadExercise = useEvent(getSelectedExerciseEvent);
   const { id } = useParams();
 
-  const { selectedExercise, listExercise } =
+  const { selectedExercise, listExercise, exerciseDelay } =
     useStore<ExerciseItemStore>($exerciseStore);
   const {
     title,
@@ -42,6 +42,7 @@ export default function Exercise() {
       timeProgress={timeProgress}
       timePause={timePause}
       deltaTime={deltaTime}
+      exerciseDelay={exerciseDelay}
     />
   );
 }

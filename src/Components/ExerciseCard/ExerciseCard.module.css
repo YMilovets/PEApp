@@ -4,12 +4,12 @@
 }
 
 .exercisePageHeader {
-    padding: 2.5em 0 1em;
+    padding: 2.5em 0 0;
 }
 
 .exercisePageTitle {
     margin: 0;
-    font: bold 2.5em Arial;
+    font: bold 2.5em/1em Arial;
 }
 
 .exercisePageImgContainer {
@@ -67,4 +67,44 @@
 
 .exercisePagePauseIcon {
     fill: #213547;
+}
+
+.exercisePageDelay {
+    height: 50px;
+    box-sizing: border-box;
+    width: auto;
+}
+
+.exercisePageDelayInput {
+    text-align: right;
+}
+
+.exercisePageSpoiler {
+    display: grid;
+    grid-template-columns: minmax(0, 832px);
+    gap: 1em;
+}
+
+.exercisePageSpoilerContainer {
+    margin-bottom: 1.25rem;
+    --spoiler-padding: 0.25rem 0.5rem;
+    --spoiler-border-radius: 0.25rem 0.5rem;
+}
+
+.exercisePageCaption {
+    margin: 0;
+}
+
+.exercisePageLabelActive {
+    background: #646cffa0;
+}
+
+.exercisePageSpoilerLabel {
+    color: #646cff;
+    width: max-content;
+}
+
+.exercisePageSpoilerLabel:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

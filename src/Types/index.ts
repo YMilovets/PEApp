@@ -17,6 +17,7 @@ export type ExerciseItemStore = {
   listExercise: Array<ExerciseItem>;
   selectedExercise: ExerciseItem | null;
   sliderPos: number;
+  exerciseDelay: number;
 };
 
 type TranslateProp = string | number | symbol;

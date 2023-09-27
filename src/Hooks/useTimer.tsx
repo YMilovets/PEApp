@@ -8,14 +8,15 @@ export default function useTimer({
   onTimeStart,
 }: TimerProps) {  
     const [status, setStatus] = useState<TimerStatus>("stopped");
-    const [time, setTime] = useState<number>();
+    const [, setTime] = useState<number>();
     const timerId = useRef<NodeJS.Timeout>();
+    const refTimer = useRef<number>();
     
     const startStepTimer = function (
       currentTime: number,
       currentStatus: TimerStatus
     ) {      
-      setTime(currentTime);
+      refTimer.current = currentTime;
       if (currentTime >= 1)
         timerId.current = setTimeout(
           startStepTimer.bind(null, currentTime - 1, currentStatus),
@@ -30,6 +31,7 @@ export default function useTimer({
         setStatus("stopped");
         onTimeOver && onTimeOver();
       }
+      setTime(refTimer.current);
     };
     function stop() {
         setStatus("stopped");
@@ -38,8 +40,16 @@ export default function useTimer({
     function start() {
         setStatus("actived");
         onTimeStart && onTimeStart();
-        timerId.current = setTimeout(startStepTimer.bind(null, initialTime, status), stepTime);
+        if (initialTime)
+          timerId.current = setTimeout(
+            startStepTimer.bind(null, initialTime, status),
+            stepTime
+          );
+        else {
+          setStatus("stopped");
+          onTimeOver && onTimeOver(); 
+        }
     }
 
-    return { status, start, stop, time };
+    return { status, start, stop, time: refTimer.current };
 }

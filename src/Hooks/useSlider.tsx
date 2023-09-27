@@ -21,9 +21,11 @@ export default function useSlider(
 		const sliderItemLength = sliderItem.map(elem => elem.clientWidth);
 		setListItemCoords(sliderItemLength);
 		setXPos(0);
+		// Исправлена ошибка неверной прокрутки слайдера при переходе на другую странцу
+		setCurrentPos(0);
 	}, [loadingData, sliderID, pathname, searchParams]);
 
-	const moveLeftSlider = () => {
+	const moveLeftSlider = () => {		
 		const slider = document.getElementById(sliderID);
 		const lastSliderItem = listItemCoords?.slice(currentPos);
 		

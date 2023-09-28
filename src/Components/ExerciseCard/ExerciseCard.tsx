@@ -1,17 +1,14 @@
 import { ExerciseProps } from "./ExerciseCard.type";
-import style from "./ExerciseCard.module.css"
+import style from "./ExerciseCard.module.css";
 import clsx from "clsx";
-import Button, { ButtonWrapper } from "../Button";
-import StartIcon from "../Icons/StartIcon";
-import PauseIcon from "../Icons/PauseIcon";
 import useCycle from "../../Hooks/useCycle";
-import { getTimeDisplay } from "./utils";
 import { Input, InputGroup, InputLabel } from "../InputGroup";
 import { ChangeEvent, useCallback } from "react";
 import { useEvent } from "effector-react";
 import { setDelayExercise } from "../../Store/events";
 import Spoiler from "../Spoiler";
-import useAudio from "../../Hooks/useAudio";
+import { CycleStatus } from "../../Hooks/types";
+import ExerciseCardTimer from "./ExerciseCardTimer";
 
 export default function ExerciseCard({
   action,
@@ -36,36 +33,10 @@ export default function ExerciseCard({
   const handleChangeDelay = useCallback(
     function <T extends ChangeEvent<U>, U extends HTMLInputElement>(e: T) {
       e.preventDefault();
-      status === "finished" && changeDelayExercise(+e.currentTarget.value);
+      status === CycleStatus.FINISHED && changeDelayExercise(+e.currentTarget.value);
     },
     [changeDelayExercise, status]
   );
-
-  useAudio(
-    [
-      {
-        source: "/audio/end.wav",
-        excludedStatus: ["afterLoaded"],
-        includedStatus: ["paused"],
-      },
-      {
-        source: "/audio/start.wav",
-        excludedStatus: ["afterLoaded"],
-        includedStatus: ["started"],
-      },
-    ],
-    status
-  );
-
-  document.onkeydown = (e) => {
-    if (
-      (e.key.toLowerCase() === "s" || e.key.toLowerCase() === "ы") &&
-      (status === "finished" || status === "afterLoaded")
-    ) {
-      start();
-    }
-    if (e.key.toLowerCase() === "p" || e.key.toLowerCase() === "з") play(status);
-  }
 
   return (
     <section className={clsx(style.exercisePage, className)}>
@@ -94,7 +65,8 @@ export default function ExerciseCard({
                 <InputLabel
                   className={clsx(style.exercisePageLabel, {
                     [style.exercisePageLabelActive]:
-                      status !== "finished" && status !== "afterLoaded",
+                      status !== CycleStatus.FINISHED &&
+                      status !== CycleStatus.AFTER_LOADED,
                   })}
                   linkedId="time-delay-exercise"
                   position="left"
@@ -109,7 +81,10 @@ export default function ExerciseCard({
                   defaultValue="0"
                   id="time-delay-exercise"
                   onChange={handleChangeDelay}
-                  disabled={status !== "finished" && status !== "afterLoaded"}
+                  disabled={
+                    status !== CycleStatus.FINISHED &&
+                    status !== CycleStatus.AFTER_LOADED
+                  }
                 />
               </InputGroup>
             </div>
@@ -119,48 +94,14 @@ export default function ExerciseCard({
           <figure className={style.exercisePageImgContainer}>
             <img className={style.exercisePageImg} src={`${img}`} alt="" />
           </figure>
-          <div className={style.exercisePageTimerContainer}>
-            <ButtonWrapper className={style.exercisePageTimerStartBtn}>
-              <Button
-                disabled={status !== "afterLoaded" && status !== "finished"}
-                onClick={start}
-                className={style.exercisePageStartBtn}
-              >
-                <StartIcon height={40} width={40} />
-                <span>Запустить (S)</span>
-              </Button>
-            </ButtonWrapper>
-            <ButtonWrapper className={style.exercisePageTimerPausetn}>
-              <Button
-                onClick={() => play(status)}
-                className={style.exercisePagePauseBtn}
-                disabled={status === "finished" || status === "afterLoaded"}
-              >
-                <PauseIcon height={40} width={40} />
-                <span>
-                  {status === "stopped" ? "Продолжить" : "Приостановить"} (P)
-                </span>
-              </Button>
-            </ButtonWrapper>
-            <div className={style.exercisePageTimer}>
-              <small>
-                Время окончания <br />
-                повторения
-              </small>
-              <h1 className={style.exercisePageValue}>
-                {getTimeDisplay(status, time, timeProgress)}
-              </h1>
-            </div>
-            <div className={style.exercisePageTimer}>
-              <small>
-                Количество выполненных <br />
-                повторений
-              </small>
-              <h1 className={style.exercisePageValue}>
-                {status === "finished" || status === "afterLoaded" ? "-" : step}
-              </h1>
-            </div>
-          </div>
+          <ExerciseCardTimer
+            timeProgress={timeProgress}
+            start={start}
+            step={step}
+            status={status}
+            time={time}
+            play={play}
+          />
         </div>
         <div
           className={style.exercisePageText}

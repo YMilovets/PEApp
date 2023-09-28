@@ -11,25 +11,25 @@ export default function useCycle(
 ) {
   const currentStep = useRef<number>(0);
   const [currentRepeat, setCurrentRepeat] = useState(0);
-  const currentStatus = useRef<CycleStatus>("finished");
-  const prevStatus = useRef<CycleStatus>("finished");
+  const currentStatus = useRef<CycleStatus>(CycleStatus.FINISHED);
+  const prevStatus = useRef<CycleStatus>(CycleStatus.FINISHED);
 
-  const [status, setStatus] = useState<CycleStatus>("afterLoaded");  
-  
+  const [status, setStatus] = useState<CycleStatus>(CycleStatus.FINISHED);
+
   const { start: pauseStartTime, stop: pauseStop } = useTimer({
     initialTime: timePause + deltaTime * (currentStep.current - 1),
-    onTimeOver: () => handleCycle("started"),
-    onTimeStart() {      
-      currentStatus.current = "paused";
+    onTimeOver: () => handleCycle(CycleStatus.STARTED),
+    onTimeStart() {
+      currentStatus.current = CycleStatus.PAUSED;
     },
   });
 
   const { start, time, stop } = useTimer({
     initialTime: timeExercise,
-    onTimeOver: () => handleCycle("paused"),
+    onTimeOver: () => handleCycle(CycleStatus.PAUSED),
     onTimeStart() {
       if (!currentRepeat) {
-        currentStatus.current = "started";
+        currentStatus.current = CycleStatus.STARTED;
         setStatus(currentStatus.current);
       }
     },
@@ -37,60 +37,60 @@ export default function useCycle(
 
   const { start: startDelay } = useTimer({
     initialTime: delayExercise,
-    onTimeOver: () => handleCycle("started"),
-    onTimeStart() {
-      currentStatus.current = "paused";
+    onTimeOver: () => handleCycle(CycleStatus.STARTED),
+    onTimeStart() {      
+      currentStatus.current = CycleStatus.PAUSED;
       setStatus(currentStatus.current);
     },
   });
 
   function pausedCycle() {
     switch (currentStatus.current) {
-      case "started":
+      case CycleStatus.STARTED:
         stop();
-        currentStatus.current = "stopped";
-        prevStatus.current = "started";
+        currentStatus.current = CycleStatus.STOPPED;
+        prevStatus.current = CycleStatus.STARTED;
         break;
-      case "paused":
+      case CycleStatus.PAUSED:
         pauseStop();
-        currentStatus.current = "stopped";
-        prevStatus.current = "paused";
+        currentStatus.current = CycleStatus.STOPPED;
+        prevStatus.current = CycleStatus.PAUSED;
         break;
-    }      
+    }
     setStatus(currentStatus.current);
   }
 
   function playCycle() {
     switch (prevStatus.current) {
-      case "started":
+      case CycleStatus.STARTED:
         start();
-        currentStatus.current = "started";
-        prevStatus.current = "stopped";
+        currentStatus.current = CycleStatus.STARTED;
+        prevStatus.current = CycleStatus.STOPPED;
         break;
-      case "paused":
+      case CycleStatus.PAUSED:
         pauseStartTime();
-        currentStatus.current = "paused";
-        prevStatus.current = "stopped";
+        currentStatus.current = CycleStatus.PAUSED;
+        prevStatus.current = CycleStatus.STOPPED;
         break;
     }
     setStatus(currentStatus.current);
   }
 
   function play(status: CycleStatus) {
-    if (status === "stopped") playCycle();
+    if (status === CycleStatus.STOPPED) playCycle();
     else pausedCycle();
   }
 
   function handleCycle(selectedStatus: CycleStatus) {
     if (currentStep.current < countRepeats) {
       currentStatus.current = selectedStatus;
-      
-      if (currentStatus.current === "paused") {
+
+      if (currentStatus.current === CycleStatus.PAUSED) {
         currentStep.current += 1;
         if (currentStep.current < countRepeats) pauseStartTime();
         else {
           currentStep.current = 0;
-          currentStatus.current = "finished";
+          currentStatus.current = CycleStatus.FINISHED;
         }
       } else start();
     }

@@ -7,7 +7,14 @@ export type TimerProps = {
 
 export type TimerStatus = "stopped" | "actived";
 
-export type CycleStatus = "afterLoaded" | "started" | "finished" | "paused" | "stopped" | "delay";
+export enum CycleStatus {
+  AFTER_LOADED = "afterLoaded",
+  STARTED = "started",
+  FINISHED = "finished",
+  PAUSED = "paused",
+  STOPPED = "stopped",
+  DELAY = "delay",
+}
 
 export type AudioProps = Array<{
   source: string;

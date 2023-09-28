@@ -46,6 +46,12 @@ sample({
   target: updateErrorEvent,
 });
 
+sample({
+  clock: getSelectedExerciseEvent,
+  fn: () => 0,
+  target: setDelayExercise,
+});
+
 const $exerciseState = combine({
   loading: getExercisesRequestFx.pending,
   error: $errorStatus,

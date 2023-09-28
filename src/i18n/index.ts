@@ -1,4 +1,5 @@
 import { TranslateProp, TranslateValue } from "../Types";
+import { ExerciseText } from "./exerciseText";
 import { NotificationText } from "./notificationText";
 
 export function translate(
@@ -8,6 +9,6 @@ export function translate(
   const listDictionaries: Record<
     string,
     Record<TranslateProp, TranslateValue>
-  > = { NotificationText };
+  > = { NotificationText, ExerciseText };
   return listDictionaries[root] ? listDictionaries[root][layerProp] : "";
 }

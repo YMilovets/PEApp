@@ -20,7 +20,7 @@ export type ExerciseItemStore = {
   exerciseDelay: number;
 };
 
-type TranslateProp = string | number | symbol;
+type TranslateProp = string | number;
 type TranslateValue = TranslateProp;
 
 export type { ExerciseItem, TranslateProp, TranslateValue };

@@ -1,8 +1,10 @@
-import { IconProps } from "./Icons.type";
-import outerStyle from "./Icons.module.css";
-import clsx from "clsx";
+import clsx from 'clsx';
+import IconProps from './Icons.type';
+import outerStyle from './Icons.module.css';
 
-function StartIcon({ width = 16, height = 16, className, style }: IconProps) {
+function StartIcon({
+  width = 16, height = 16, className, style,
+}: IconProps) {
   return (
     <svg
       version="1.1"
@@ -23,4 +25,4 @@ function StartIcon({ width = 16, height = 16, className, style }: IconProps) {
   );
 }
 
-export default StartIcon
+export default StartIcon;

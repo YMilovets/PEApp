@@ -1,10 +1,7 @@
-import clsx from "clsx";
-import { InputLabelProp } from "./InputGroup.type";
-import style from "./InputGroup.module.css";
+import clsx from 'clsx';
+import { InputLabelProp } from './InputGroup.type';
+import style from './InputGroup.module.css';
 
-function getCapitalazedWord(text: string) {
-  return `${text[0].toUpperCase()}${text.slice(1)}`;
-}
 function InputLabel({
   children,
   className,
@@ -16,9 +13,9 @@ function InputLabel({
       htmlFor={linkedId}
       className={clsx(
         style.inputLabel,
-        { [style.inputLabelLeft]: position === "left" },
-        { [style.inputLabelRight]: position === "right" },
-        className
+        { [style.inputLabelLeft]: position === 'left' },
+        { [style.inputLabelRight]: position === 'right' },
+        className,
       )}
     >
       {children}

@@ -1,9 +1,11 @@
-import { MouseEventHandler, ReactNode } from "react";
+import { ReactNode } from 'react';
 
-export default interface SpoilerProps {
+interface SpoilerProps {
   children: ReactNode;
   caption?: string | ReactNode;
   className?: string;
   style: Record<string, string>;
-  captionRenderFn?: (onClick: MouseEventHandler) => ReactNode;
+  captionRenderFn?: ReactNode;
 }
+
+export default SpoilerProps;

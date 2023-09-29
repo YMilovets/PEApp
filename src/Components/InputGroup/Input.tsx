@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import { InputProps } from "./InputGroup.type";
-import style from "./InputGroup.module.css";
+import clsx from 'clsx';
+import { InputProps } from './InputGroup.type';
+import style from './InputGroup.module.css';
 
 function Input({
   className,
@@ -13,7 +13,7 @@ function Input({
   max,
   value,
   defaultValue,
-  disabled
+  disabled,
 }: InputProps) {
   return (
     <input

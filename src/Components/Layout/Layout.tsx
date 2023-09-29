@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
-import Header from "../Header";
-import { ErrorBoundary } from "react-error-boundary";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import { Outlet } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
+import Header from '../Header';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function Layout() {
   return (

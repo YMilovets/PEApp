@@ -1,3 +1,3 @@
-import ExerciseCard from "./ExerciseCard";
+import ExerciseCard from './ExerciseCard';
 
 export default ExerciseCard;

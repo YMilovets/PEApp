@@ -1,5 +1,5 @@
-import Button from "./Button";
-import ButtonWrapper from "./ButtonWrapper"
+import Button from './Button';
+import ButtonWrapper from './ButtonWrapper';
 
 export default Button;
 

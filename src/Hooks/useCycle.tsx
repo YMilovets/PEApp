@@ -1,13 +1,14 @@
-import { useRef, useState } from "react";
-import useTimer from "./useTimer";
-import { CycleStatus } from "./types";
+/* eslint-disable no-use-before-define */
+import { useRef, useState } from 'react';
+import useTimer from './useTimer';
+import { CycleStatus } from './types';
 
 export default function useCycle(
   countRepeats: number,
   timeExercise: number,
   delayExercise: number,
   timePause = 0,
-  deltaTime = 0
+  deltaTime = 0,
 ) {
   const currentStep = useRef<number>(0);
   const [currentRepeat, setCurrentRepeat] = useState(0);
@@ -38,7 +39,7 @@ export default function useCycle(
   const { start: startDelay } = useTimer({
     initialTime: delayExercise,
     onTimeOver: () => handleCycle(CycleStatus.STARTED),
-    onTimeStart() {      
+    onTimeStart() {
       currentStatus.current = CycleStatus.PAUSED;
       setStatus(currentStatus.current);
     },
@@ -56,6 +57,7 @@ export default function useCycle(
         currentStatus.current = CycleStatus.STOPPED;
         prevStatus.current = CycleStatus.PAUSED;
         break;
+      default: break;
     }
     setStatus(currentStatus.current);
   }
@@ -72,15 +74,15 @@ export default function useCycle(
         currentStatus.current = CycleStatus.PAUSED;
         prevStatus.current = CycleStatus.STOPPED;
         break;
+      default: break;
     }
     setStatus(currentStatus.current);
   }
 
-  function play(status: CycleStatus) {
-    if (status === CycleStatus.STOPPED) playCycle();
+  function play(playStatus: CycleStatus) {
+    if (playStatus === CycleStatus.STOPPED) playCycle();
     else pausedCycle();
   }
-
   function handleCycle(selectedStatus: CycleStatus) {
     if (currentStep.current < countRepeats) {
       currentStatus.current = selectedStatus;

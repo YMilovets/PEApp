@@ -1,15 +1,19 @@
-import clsx from "clsx";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { Link, NavLink, useSearchParams } from "react-router-dom";
-import Button from "../Button";
-import { ButtonWrapper } from "../Button"
-import { BackwardIcon, ForwardIcon, MenuIcon, SearchIcon } from "../Icons";
-import { Input, InputGroup, InputLabel } from "../InputGroup";
-import style from "./Header.module.css";
-import { useEvent } from "effector-react";
-import useSlider from "../../Hooks/useSlider";
-import { setSliderPos } from "../../Store/events";
-import useFilterSlider from "../../Hooks/useFilterSlider";
+import clsx from 'clsx';
+import {
+  ChangeEvent, useCallback, useEffect, useState,
+} from 'react';
+import { Link, NavLink, useSearchParams } from 'react-router-dom';
+import { useEvent } from 'effector-react';
+import Button, { ButtonWrapper } from '../Button';
+
+import {
+  BackwardIcon, ForwardIcon, MenuIcon, SearchIcon,
+} from '../Icons';
+import { Input, InputGroup, InputLabel } from '../InputGroup';
+import style from './Header.module.css';
+import useSlider from '../../Hooks/useSlider';
+import { setSliderPos } from '../../Store/events';
+import useFilterSlider from '../../Hooks/useFilterSlider';
 
 export default function Header() {
   const [isShowMenu, setIsShowMenu] = useState(false);
@@ -24,13 +28,13 @@ export default function Header() {
     e.preventDefault();
     setSearchParams({ search: e.target.value });
     handleSliderPos(0);
-  }, [handleSliderPos, setSearchParams])
+  }, [handleSliderPos, setSearchParams]);
 
   const { itemWithSearchFilter } = useFilterSlider();
-  
+
   const [xPos, moveLeftSlider, moveRightSlider] = useSlider(
     itemWithSearchFilter,
-    "slider-exercises",
+    'slider-exercises',
     32,
   );
 
@@ -66,7 +70,7 @@ export default function Header() {
             className={style.searchInputIcon}
             width={24}
             height={24}
-            style={{ "--color-light": "#747bff" }}
+            style={{ '--color-light': '#747bff' }}
           />
         </InputGroup>
         <div className={style.sliderManager}>

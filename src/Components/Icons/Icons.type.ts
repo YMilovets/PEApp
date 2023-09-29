@@ -5,4 +5,4 @@ type IconProps = Partial<{
   className: string;
 }>
 
-export type { IconProps };
+export default IconProps;

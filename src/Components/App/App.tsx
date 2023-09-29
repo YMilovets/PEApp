@@ -1,8 +1,8 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
-import NotFoundPage from "../../Pages/NotFoundPage";
-import ExercisesList from "../ExercisesList/ExercisesList";
-import Layout from "../Layout";
-import Exercise from "../../Pages/Exercise";
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import NotFoundPage from '../../Pages/NotFoundPage';
+import ExercisesList from '../ExercisesList/ExercisesList';
+import Layout from '../Layout';
+import Exercise from '../../Pages/Exercise';
 
 function App() {
   return (
@@ -19,4 +19,3 @@ function App() {
 }
 
 export default App;
-

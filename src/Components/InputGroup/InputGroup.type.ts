@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   InputHTMLAttributes,
   FormHTMLAttributes,
   LabelHTMLAttributes,
-} from "react";
+} from 'react';
 
 interface InputGroupProps extends FormHTMLAttributes<HTMLFormElement> {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 interface InputLabelProp extends LabelHTMLAttributes<HTMLLabelElement> {
   children: React.ReactNode;
   className?: string;
-  position: "left" | "right";
+  position: 'left' | 'right';
   linkedId?: string;
 }
 

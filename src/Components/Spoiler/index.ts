@@ -1,3 +1,3 @@
-import Spoiler from "./Spoiler";
+import Spoiler from './Spoiler';
 
 export default Spoiler;

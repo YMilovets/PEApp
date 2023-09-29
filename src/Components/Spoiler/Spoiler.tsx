@@ -1,9 +1,9 @@
-import { useCallback, useState } from "react";
-import Button from "../Button";
-import SpoilerProps from "./Spoiler.type";
-import clsx from "clsx";
+import { useCallback, useState } from 'react';
+import clsx from 'clsx';
+import Button from '../Button';
+import SpoilerProps from './Spoiler.type';
 
-import spoilerStyle from "./Spoiler.module.css";
+import spoilerStyle from './Spoiler.module.css';
 
 function Spoiler({
   children,
@@ -16,9 +16,18 @@ function Spoiler({
   const handleClick = useCallback(() => setIsActive(!isActive), [isActive]);
   return (
     <article style={style} className={clsx(className, spoilerStyle.spoiler)}>
-      {captionRenderFn ? (
-        captionRenderFn(handleClick)
-      ) : (
+      {(
+        <div
+          role="button"
+          tabIndex={-1}
+          onKeyDown={(e) => {
+            e.preventDefault();
+          }}
+          onClick={handleClick}
+        >
+          {captionRenderFn}
+        </div>
+      ) || (
         <Button className={spoilerStyle.spoilerSwitcher} onClick={handleClick}>
           {caption}
         </Button>

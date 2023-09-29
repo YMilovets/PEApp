@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import { InputGroupProps } from "./InputGroup.type";
-import style from "./InputGroup.module.css";
-import { useCallback, useState } from "react";
+import clsx from 'clsx';
+import { useCallback, useState } from 'react';
+import { InputGroupProps } from './InputGroup.type';
+import style from './InputGroup.module.css';
 
 function InputGroup({ children, className, onSubmit }: InputGroupProps) {
   const [isFocused, setIsFocused] = useState(false);

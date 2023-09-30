@@ -7,7 +7,7 @@ export default function useAudio(
   volume = 100,
 ) {
   useEffect(() => {
-    audioData.forEach(({ source, excludedStatus, includedStatus }) => {
+    audioData.forEach(({ source, excludedStatus = [], includedStatus = [] }) => {
       const audio = new Audio();
       if (
         (excludedStatus.length !== 0 || includedStatus.length !== 0)

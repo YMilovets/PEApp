@@ -1,21 +1,19 @@
 /* eslint-disable no-use-before-define */
 import { useRef, useState } from 'react';
 import useTimer from './useTimer';
-import { CycleStatus } from './types';
+import { CycleProps, CycleStatus } from './types';
 
 export default function useCycle(
-  countRepeats: number,
-  timeExercise: number,
-  delayExercise: number,
-  timePause = 0,
-  deltaTime = 0,
+  {
+    countRepeats, delayExercise, timeExercise, timePause = 0, deltaTime = 0, onCycleOver,
+  }: CycleProps,
 ) {
   const currentStep = useRef<number>(0);
   const [currentRepeat, setCurrentRepeat] = useState(0);
   const currentStatus = useRef<CycleStatus>(CycleStatus.FINISHED);
   const prevStatus = useRef<CycleStatus>(CycleStatus.FINISHED);
 
-  const [status, setStatus] = useState<CycleStatus>(CycleStatus.FINISHED);
+  const [status, setStatus] = useState<CycleStatus>(CycleStatus.AFTER_LOADED);
 
   const { start: pauseStartTime, stop: pauseStop } = useTimer({
     initialTime: timePause + deltaTime * (currentStep.current - 1),
@@ -93,6 +91,7 @@ export default function useCycle(
         else {
           currentStep.current = 0;
           currentStatus.current = CycleStatus.FINISHED;
+          if (onCycleOver) onCycleOver();
         }
       } else start();
     }

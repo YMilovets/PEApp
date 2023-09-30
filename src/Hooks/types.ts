@@ -5,6 +5,15 @@ export type TimerProps = {
   onTimeStart?: () => unknown | void;
 };
 
+export type CycleProps = {
+  countRepeats: number,
+  timeExercise: number,
+  delayExercise: number,
+  timePause: number,
+  deltaTime: number,
+  onCycleOver?: () => void
+};
+
 export type TimerStatus = 'stopped' | 'actived';
 
 export enum CycleStatus {
@@ -18,6 +27,6 @@ export enum CycleStatus {
 
 export type AudioProps = Array<{
   source: string;
-  excludedStatus: Array<CycleStatus>;
-  includedStatus: Array<CycleStatus>;
+  excludedStatus?: Array<CycleStatus>;
+  includedStatus?: Array<CycleStatus>;
 }>;

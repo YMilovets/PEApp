@@ -27,11 +27,13 @@ export default function ExerciseCard({
   const {
     start, step, status, time, play,
   } = useCycle(
-    countRepeat || 0,
-    timeProgress || 0,
-    exerciseDelay || 0,
-    timePause || 0,
-    deltaTime || 0,
+    {
+      countRepeats: countRepeat || 0,
+      timeExercise: timeProgress || 0,
+      delayExercise: exerciseDelay || 0,
+      timePause: timePause || 0,
+      deltaTime: deltaTime || 0,
+    },
   );
 
   const changeDelayExercise = useEvent(setDelayExercise);

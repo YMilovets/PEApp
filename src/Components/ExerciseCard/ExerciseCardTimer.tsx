@@ -42,6 +42,10 @@ function ExerciseCardTimer({
         excludedStatus: [CycleStatus.AFTER_LOADED],
         includedStatus: [CycleStatus.STARTED],
       },
+      {
+        source: '/audio/end.wav',
+        includedStatus: [CycleStatus.FINISHED],
+      },
     ],
     status,
     volume,

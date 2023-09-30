@@ -1,6 +1,6 @@
 import { useStore } from 'effector-react';
 import { useEffect } from 'react';
-import { translate } from '../../i18n';
+import translate from '../../i18n';
 import { $exerciseState } from '../../Store/exercise';
 import Card from '../Card/Card';
 import style from './ExercisesList.module.css';

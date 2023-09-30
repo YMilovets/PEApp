@@ -1,14 +1,14 @@
-import { TranslateProp, TranslateValue } from "../Types";
-import { ExerciseText } from "./exerciseText";
-import { NotificationText } from "./notificationText";
+import { TranslateProp, TranslateValue } from '../Types';
+import ExerciseText from './exerciseText';
+import NotificationText from './notificationText';
 
-export function translate(
+export default function translate(
   root: string,
-  layerProp: TranslateProp
+  layerProp: TranslateProp,
 ): TranslateValue {
   const listDictionaries: Record<
     string,
     Record<TranslateProp, TranslateValue>
   > = { NotificationText, ExerciseText };
-  return listDictionaries[root] ? listDictionaries[root][layerProp] : "";
+  return listDictionaries[root] ? listDictionaries[root][layerProp] : '';
 }

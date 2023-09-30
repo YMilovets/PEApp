@@ -9,7 +9,7 @@ import Button, { ButtonWrapper } from '../Button';
 import PauseIcon from '../Icons/PauseIcon';
 import StartIcon from '../Icons/StartIcon';
 import useAudio from '../../Hooks/useAudio';
-import { translate } from '../../i18n';
+import translate from '../../i18n';
 import { setVolumeNotification } from '../../Store/events';
 
 function ExerciseCardTimer({

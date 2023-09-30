@@ -1,16 +1,16 @@
-import { useCallback } from "react";
-import { translate } from "../../i18n";
-import { ErrorMessageProps } from "./ErrorMessage.type";
-import Button from "../Button";
-import style from "./ErrorMessage.module.css";
+import { useCallback } from 'react';
+import translate from '../../i18n';
+import { ErrorMessageProps } from './ErrorMessage.type';
+import Button from '../Button';
+import style from './ErrorMessage.module.css';
 
 function ErrorMessage({ error: { message } }: ErrorMessageProps) {
-  const handleClickReloadPage = useCallback(() => location.reload(), []);
+  const handleClickReloadPage = useCallback(() => window.location.reload(), []);
   return (
     <div className={style.errorContainer}>
       <p>{message}</p>
       <Button onClick={handleClickReloadPage}>
-        {translate("NotificationText", "reloadPageBtn") as string}
+        {translate('NotificationText', 'reloadPageBtn') as string}
       </Button>
     </div>
   );

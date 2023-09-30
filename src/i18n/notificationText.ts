@@ -1,4 +1,4 @@
-export enum NotificationText {
+enum NotificationText {
   reloadPageBtn = 'Перезагрузить страницу',
   '0x000' = 'Ошибка: сетевое подключение недоступно, возможно возникли проблемы с сетью',
   '0x001' = 'Загрузка данных',
@@ -6,3 +6,4 @@ export enum NotificationText {
   '0x003' = 'Страница не найдена',
 }
 
+export default NotificationText;

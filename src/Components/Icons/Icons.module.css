@@ -1,3 +1,4 @@
 .menuIcon, .forwardIcon, .backwardIcon, .startIcon, .pauseIcon {
-  fill: var(--color-light);
+  --icon-fill-color: var(--root-color-light);
+  fill: var(--icon-fill-color);
 }

@@ -10,5 +10,5 @@
 .listExercises {
   width: 100vw;
   overflow: hidden;
-  background: #f9f9f9;
+  background: var(--ui-background-light);
 }

@@ -1,6 +1,6 @@
 .errorContainer {
     padding: 2rem;
-    background: #f9f9f9;
+    background: var(--ui-background-light);
 }
 
 .errorContainer p {

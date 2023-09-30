@@ -70,7 +70,7 @@ export default function Header() {
             className={style.searchInputIcon}
             width={24}
             height={24}
-            style={{ '--color-light': '#747bff' }}
+            style={{ '--icon-fill-color': 'var(--ui-blue-magenta-100)' }}
           />
         </InputGroup>
         <div className={style.sliderManager}>

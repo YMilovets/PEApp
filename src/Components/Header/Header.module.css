@@ -9,11 +9,11 @@
   gap: 1rem;
 }
 .navigationLogo {
-  font: bold 1.25em/1.5em Arial;
+  font: bold 1.25em/1.5em var(--root-font-family);
 }
 
 .navigationMotto {
-  font: 0.875em/1.5em Arial;
+  font: 0.875em/1.5em var(--root-font-family);
 }
 
 .sliderManager {
@@ -42,7 +42,7 @@
   padding: 0.5em 0 0;
   margin: 0;
   list-style: none;
-  font: 0.875em/1.5em Arial;
+  font: 0.875em/1.5em var(--root-font-family);
 }
 
 .searchInput {

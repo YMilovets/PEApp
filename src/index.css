@@ -3,30 +3,56 @@
 }
 
 :root {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--root-font-family);
   line-height: 1.5;
   font-weight: 400;
   font-size: 16px;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  --color-light: white;
+
+  --root-color-light: white;
+  --root-background-color: white;
+  --root-text-color: var(--ui-dark-color);
+  --root-font-family: Arial, Helvetica, sans-serif;
+  --root-box-shadow-color: rgba(223, 223, 223, 0.75);
+
+  --ui-background-light: #f9f9f9;
+  --ui-dark-color: #213547;
+  --ui-blue-magenta-dark-100: #535bf2;
+  --ui-blue-magenta-dark-90: #646bf3;
+  --ui-blue-magenta-dark-80: #757bf4;
+  --ui-blue-magenta-dark-70: #868cf5;
+  --ui-blue-magenta-dark-60: #979cf7;
+  --ui-blue-magenta-dark-50: #a9adf8;
+  --ui-blue-magenta-dark-40: #babdf9;
+  --ui-blue-magenta-dark-30: #cbcdfb;
+  --ui-blue-magenta-dark-20: #dcdefc;
+  --ui-blue-magenta-dark-10: #edeefd;
+
+  --ui-blue-magenta-100: #646CFF;
+  --ui-blue-magenta-100-66: #646CFFaa;
+  --ui-blue-magenta-100-62: #646CFFa0;
+  --ui-blue-magenta-90: #737aff;
+  --ui-blue-magenta-80: #8389ff;
+  --ui-blue-magenta-70: #9298ff;
+  --ui-blue-magenta-60: #a2a6ff;
+  --ui-blue-magenta-50: #b1b5ff;
+  --ui-blue-magenta-40: #c1c4ff;
+  --ui-blue-magenta-30: #d0d2ff;
+  --ui-blue-magenta-20: #e0e1ff;
+  --ui-blue-magenta-10: #eff0ff;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--ui-blue-magenta-100);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--ui-blue-magenta-dark-100)
 }
 
 body {
@@ -43,13 +69,10 @@ h1 {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--root-text-color);
+    background-color: var(--root-background-color);
   }
   a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+    color: var(--ui-blue-magenta-90);
   }
 }

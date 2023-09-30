@@ -56,7 +56,7 @@ export default function ExerciseCard({
 
   return (
     <section className={clsx(style.exercisePage, className)}>
-      <article>
+      <article className={style.exercisePageContainer}>
         <header className={style.exercisePageHeader}>
           <h1 className={style.exercisePageTitle}>{title}</h1>
         </header>
@@ -67,9 +67,9 @@ export default function ExerciseCard({
             '--spoiler-border-radius': '0.45rem',
           }}
           captionRenderFn={(
-            <small className={style.exercisePageSpoilerLabel}>
+            <p className={style.exercisePageSpoilerLabel}>
               Настройки
-            </small>
+            </p>
           )}
         >
           <div className={style.exercisePageSpoiler}>

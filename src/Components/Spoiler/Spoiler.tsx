@@ -18,6 +18,7 @@ function Spoiler({
     <article style={style} className={clsx(className, spoilerStyle.spoiler)}>
       {(
         <div
+          style={{ width: 'max-content' }}
           role="button"
           tabIndex={-1}
           onKeyDown={(e) => {

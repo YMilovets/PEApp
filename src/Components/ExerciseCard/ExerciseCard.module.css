@@ -9,32 +9,43 @@
 }
 
 .exercisePageTitle {
-    margin: 0;
+    margin: 0 0 0.1em;
     font: bold 2.5em/1em var(--root-font-family);
 }
 
 .exercisePageImgContainer {
-    margin: 0;
+    margin: 0 0 2em;
     height: 265px;
-    padding-bottom: 2em;
-}
-
-.exercisePageImg {
-    height: inherit;
+    width: 100%;
     border-radius: 0.75rem;
     -webkit-box-shadow: 0px 0px 25px 2px var(--root-box-shadow-color);
     -moz-box-shadow: 0px 0px 25px 2px var(--root-box-shadow-color);
     box-shadow: 0px 0px 25px 2px var(--root-box-shadow-color);
+    background: white;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.exercisePageImg {
+    height: inherit;
 }
 
 .exercisePageManager {
-    display: flex;
-    gap: 2.5em;
+    display: grid;
+    grid-template-columns: 1fr 2.5em 356px;
+    grid-column: 1;
+}
+
+.exercisePageContainer {
+    display: grid;
+    grid-template-columns: minmax(832px, 1fr) 1fr;
 }
 
 .exercisePageTimerContainer {
     display: grid;
     gap: 1.5em;
+    grid-column: 3;
     grid-template-columns: minmax(166px, 1fr) minmax(166px, 1fr);
     grid-template-rows: max-content 1fr;
     grid-template-areas: 
@@ -74,6 +85,11 @@
     height: 50px;
     box-sizing: border-box;
     width: auto;
+    margin-bottom: 0.55rem;
+}
+
+.exercisePageDelay:last-of-type {
+    margin-bottom: 0;
 }
 
 .exercisePageDelayInput {
@@ -87,6 +103,7 @@
 }
 
 .exercisePageSpoilerContainer {
+    grid-column: 1;
     margin-bottom: 1.25rem;
     --spoiler-padding: 0.25rem 0.5rem;
     --spoiler-border-radius: 0.25rem 0.5rem;
@@ -103,9 +120,15 @@
 .exercisePageSpoilerLabel {
     color: var(--ui-blue-magenta-100);
     width: max-content;
+    margin: 0;
+    font: 0.825em var(--root-font-family);
 }
 
 .exercisePageSpoilerLabel:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.exercisePageText {
+    grid-column: 1 / span 2;
 }

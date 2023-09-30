@@ -1,10 +1,11 @@
-import { CycleStatus } from "../../Hooks/types";
-import { ExerciseItem } from "../../Types";
+import { CycleStatus } from '../../Hooks/types';
+import { ExerciseItem } from '../../Types';
 
 export interface ExerciseProps extends Partial<ExerciseItem> {
-    className?: string;
-    exerciseDelay: number;
-    /* count_repeat: number;
+  className?: string;
+  exerciseDelay: number;
+  volume: number;
+  /* count_repeat: number;
     delta_time: number;
     time_pause: number;
     time_progress: number; */
@@ -18,4 +19,5 @@ export interface ExerciseTimerProps {
   time: number | undefined;
   step: number;
   className?: string;
+  volume: number;
 }

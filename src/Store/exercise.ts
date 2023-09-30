@@ -3,16 +3,18 @@ import {
   createEffect,
   createStore,
   sample,
-} from "effector";
-import { ExerciseItem, ExerciseItemStore } from "../Types";
-import { getSelectedExerciseEvent, setDelayExercise, setSliderPos, updateErrorEvent } from "./events";
+} from 'effector';
+import { ExerciseItem, ExerciseItemStore } from '../Types';
+import {
+  getSelectedExerciseEvent, setDelayExercise, setSliderPos, setVolumeNotification, updateErrorEvent,
+} from './events';
 
 const getExercisesRequestFx = createEffect(
-  async function getExercisesRequest() {   
-    const url = "https://ymilovets.github.io/storageJSON/exercises.json";
+  async () => {
+    const url = 'https://ymilovets.github.io/storageJSON/exercises.json';
     const exercises = await fetch(url);
     return exercises.json();
-  }
+  },
 );
 
 const $exerciseStore = createStore<ExerciseItemStore>({
@@ -20,6 +22,7 @@ const $exerciseStore = createStore<ExerciseItemStore>({
   selectedExercise: null,
   sliderPos: 0,
   exerciseDelay: 0,
+  volume: 100,
 })
   .on(getExercisesRequestFx.doneData, (state, payload) => ({
     ...state,
@@ -29,12 +32,16 @@ const $exerciseStore = createStore<ExerciseItemStore>({
   .on(getSelectedExerciseEvent, (state, payload) => ({
     ...state,
     selectedExercise: state.listExercise.find(
-      ({ link }: ExerciseItem) => link === payload
+      ({ link }: ExerciseItem) => link === payload,
     ) as ExerciseItem,
   }))
   .on(setDelayExercise, (state, payload) => ({
     ...state,
     exerciseDelay: payload,
+  }))
+  .on(setVolumeNotification, (state, volPayload) => ({
+    ...state,
+    volume: volPayload,
   }));
 const $errorStatus = createStore(false).on(updateErrorEvent, () => true);
 

@@ -1,14 +1,16 @@
-import { ExerciseProps } from "./ExerciseCard.type";
-import style from "./ExerciseCard.module.css";
-import clsx from "clsx";
-import useCycle from "../../Hooks/useCycle";
-import { Input, InputGroup, InputLabel } from "../InputGroup";
-import { ChangeEvent, useCallback } from "react";
-import { useEvent } from "effector-react";
-import { setDelayExercise } from "../../Store/events";
-import Spoiler from "../Spoiler";
-import { CycleStatus } from "../../Hooks/types";
-import ExerciseCardTimer from "./ExerciseCardTimer";
+import clsx from 'clsx';
+import {
+  ChangeEvent, useCallback,
+} from 'react';
+import { useEvent } from 'effector-react';
+import { ExerciseProps } from './ExerciseCard.type';
+import style from './ExerciseCard.module.css';
+import useCycle from '../../Hooks/useCycle';
+import { Input, InputGroup, InputLabel } from '../InputGroup';
+import { setDelayExercise, setVolumeNotification } from '../../Store/events';
+import Spoiler from '../Spoiler';
+import { CycleStatus } from '../../Hooks/types';
+import ExerciseCardTimer from './ExerciseCardTimer';
 
 export default function ExerciseCard({
   action,
@@ -20,22 +22,36 @@ export default function ExerciseCard({
   timePause,
   deltaTime,
   exerciseDelay,
+  volume,
 }: ExerciseProps) {
-  const { start, step, status, time, play } = useCycle(
+  const {
+    start, step, status, time, play,
+  } = useCycle(
     countRepeat || 0,
     timeProgress || 0,
     exerciseDelay || 0,
     timePause || 0,
-    deltaTime || 0
+    deltaTime || 0,
   );
 
   const changeDelayExercise = useEvent(setDelayExercise);
   const handleChangeDelay = useCallback(
-    function <T extends ChangeEvent<U>, U extends HTMLInputElement>(e: T) {
+    (e: ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
-      status === CycleStatus.FINISHED && changeDelayExercise(+e.currentTarget.value);
+      if (status === CycleStatus.FINISHED) {
+        changeDelayExercise(+e.currentTarget.value);
+      }
     },
-    [changeDelayExercise, status]
+    [changeDelayExercise, status],
+  );
+
+  const changeVolumeExercise = useEvent(setVolumeNotification);
+  const handleChangeVolume = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      changeVolumeExercise(+e.currentTarget.value);
+    },
+    [changeVolumeExercise],
   );
 
   return (
@@ -47,11 +63,11 @@ export default function ExerciseCard({
         <Spoiler
           className={style.exercisePageSpoilerContainer}
           style={{
-            "--spoiler-padding": "0.2rem 0.55rem",
-            "--spoiler-border-radius": "0.45rem",
+            '--spoiler-padding': '0.2rem 0.55rem',
+            '--spoiler-border-radius': '0.45rem',
           }}
-          captionRenderFn={(onClick) => (
-            <small className={style.exercisePageSpoilerLabel} onClick={onClick}>
+          captionRenderFn={(
+            <small className={style.exercisePageSpoilerLabel}>
               Настройки
             </small>
           )}
@@ -65,8 +81,8 @@ export default function ExerciseCard({
                 <InputLabel
                   className={clsx(style.exercisePageLabel, {
                     [style.exercisePageLabelActive]:
-                      status !== CycleStatus.FINISHED &&
-                      status !== CycleStatus.AFTER_LOADED,
+                      status !== CycleStatus.FINISHED
+                      && status !== CycleStatus.AFTER_LOADED,
                   })}
                   linkedId="time-delay-exercise"
                   position="left"
@@ -82,9 +98,30 @@ export default function ExerciseCard({
                   id="time-delay-exercise"
                   onChange={handleChangeDelay}
                   disabled={
-                    status !== CycleStatus.FINISHED &&
-                    status !== CycleStatus.AFTER_LOADED
+                    status !== CycleStatus.FINISHED
+                    && status !== CycleStatus.AFTER_LOADED
                   }
+                />
+              </InputGroup>
+              <small className={style.exercisePageCaption}>
+                Настройка громкости звука уведомления
+              </small>
+              <InputGroup className={style.exercisePageDelay}>
+                <InputLabel
+                  className={clsx(style.exercisePageLabel)}
+                  linkedId="volume-sound"
+                  position="left"
+                >
+                  Громкость
+                </InputLabel>
+                <Input
+                  className={style.exercisePageDelayInput}
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={volume}
+                  id="volume-sound"
+                  onChange={handleChangeVolume}
                 />
               </InputGroup>
             </div>
@@ -101,11 +138,12 @@ export default function ExerciseCard({
             status={status}
             time={time}
             play={play}
+            volume={volume}
           />
         </div>
         <div
           className={style.exercisePageText}
-          dangerouslySetInnerHTML={{ __html: action || "" }}
+          dangerouslySetInnerHTML={{ __html: action || '' }}
         />
       </article>
     </section>

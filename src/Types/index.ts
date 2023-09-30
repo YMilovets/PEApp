@@ -18,6 +18,7 @@ export type ExerciseItemStore = {
   selectedExercise: ExerciseItem | null;
   sliderPos: number;
   exerciseDelay: number;
+  volume: number;
 };
 
 type TranslateProp = string | number;

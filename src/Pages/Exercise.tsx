@@ -1,19 +1,20 @@
-import { useEvent, useStore } from "effector-react"
-import { $exerciseStore } from "../Store/exercise"
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import ExerciseCard from "../Components/ExerciseCard";
-import { getSelectedExerciseEvent } from "../Store/events";
-import NotFoundPage from "./NotFoundPage";
-import { useClearSearch } from "../Hooks/useClearSearch";
-import { ExerciseItemStore } from "../Types";
+import { useEvent, useStore } from 'effector-react';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { $exerciseStore } from '../Store/exercise';
+import ExerciseCard from '../Components/ExerciseCard';
+import { getSelectedExerciseEvent } from '../Store/events';
+import NotFoundPage from './NotFoundPage';
+import useClearSearch from '../Hooks/useClearSearch';
+import { ExerciseItemStore } from '../Types';
 
 export default function Exercise() {
   const handleLoadExercise = useEvent(getSelectedExerciseEvent);
   const { id } = useParams();
 
-  const { selectedExercise, listExercise, exerciseDelay } =
-    useStore<ExerciseItemStore>($exerciseStore);
+  const {
+    selectedExercise, listExercise, exerciseDelay, volume,
+  } = useStore<ExerciseItemStore>($exerciseStore);
   const {
     title,
     action,
@@ -29,7 +30,7 @@ export default function Exercise() {
     handleLoadExercise(id);
   }, [handleLoadExercise, id, listExercise]);
 
-  useClearSearch("#global-search");
+  useClearSearch('#global-search');
 
   if (!selectedExercise) return <NotFoundPage />;
   return (
@@ -43,6 +44,7 @@ export default function Exercise() {
       timePause={timePause}
       deltaTime={deltaTime}
       exerciseDelay={exerciseDelay}
+      volume={volume}
     />
   );
 }

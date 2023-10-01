@@ -1,13 +1,14 @@
 {
   "name": "peappmodern",
   "private": true,
-  "version": "3.1.1 build 5",
+  "version": "3.1.2-11",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "clsx": "1.2.1",

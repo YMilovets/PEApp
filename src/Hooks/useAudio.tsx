@@ -16,7 +16,7 @@ export default function useAudio(
         && (includedStatus.length === 0
           || includedStatus.every((currentStatus) => status === currentStatus))
       ) {
-        audio.src = source;
+        audio.src = `${window.location.origin}${window.location.pathname}${source}`;
         audio.volume = volume / 100;
         audio.play();
       }

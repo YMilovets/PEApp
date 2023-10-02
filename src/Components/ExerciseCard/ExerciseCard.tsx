@@ -40,7 +40,7 @@ export default function ExerciseCard({
   const handleChangeDelay = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
-      if (status === CycleStatus.FINISHED) {
+      if (status === CycleStatus.AFTER_LOADED) {
         changeDelayExercise(+e.currentTarget.value);
       }
     },

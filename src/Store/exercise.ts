@@ -11,7 +11,7 @@ import {
 
 const getExercisesRequestFx = createEffect(
   async () => {
-    const url = 'https://ymilovets.github.io/storageJSON/exercises.json';
+    const url = `${import.meta.env.VITE_GLOBAL_API}/exercises`;
     const exercises = await fetch(url);
     return exercises.json();
   },

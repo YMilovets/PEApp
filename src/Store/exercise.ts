@@ -11,7 +11,7 @@ import {
 
 const getExercisesRequestFx = createEffect(
   async () => {
-    const url = `${import.meta.env.VITE_GLOBAL_API}/exercises`;
+    const url = `${import.meta.env.VITE_GLOBAL_API}/${import.meta.env.VITE_GLOBAL_FILE}`;
     const exercises = await fetch(url);
     return exercises.json();
   },

@@ -8,9 +8,10 @@ import { ExerciseItem, ExerciseItemStore } from '../Types';
 import {
   getSelectedExerciseEvent, setDelayExercise, setSliderPos, setVolumeNotification, updateErrorEvent,
 } from './events';
+import exercisesRequestFacades from '../Facades/exercisesRequestFacades';
 
 const getExercisesRequestFx = createEffect(
-  async () => {
+  async (): Promise<Array<ExerciseItem>> => {
     const url = `${import.meta.env.VITE_GLOBAL_API}/${import.meta.env.VITE_GLOBAL_FILE}`;
     const exercises = await fetch(url);
     return exercises.json();
@@ -26,7 +27,7 @@ const $exerciseStore = createStore<ExerciseItemStore>({
 })
   .on(getExercisesRequestFx.doneData, (state, payload) => ({
     ...state,
-    listExercise: payload,
+    listExercise: exercisesRequestFacades(payload),
   }))
   .on(setSliderPos, (state, payload) => ({ ...state, sliderPos: payload }))
   .on(getSelectedExerciseEvent, (state, payload) => ({

@@ -13,6 +13,18 @@ type ExerciseItem = {
   deltaTime?: number;
 };
 
+export type ExerciseItemRequest = {
+  id: number;
+  title: string;
+  action: string;
+  link: string;
+  count_repeat: number;
+  time_progress: number;
+  time_pause: number;
+  delta_time: number;
+  delta_exercise: number;
+};
+
 export type ExerciseItemStore = {
   listExercise: Array<ExerciseItem>;
   selectedExercise: ExerciseItem | null;

@@ -1,22 +1,15 @@
+import { combine, createStore, restore, sample } from "effector";
+import { ExerciseItem, ExerciseItemRequest, ExerciseItemStore } from "../Types";
+import { removeAllExercises, setExercise } from "./database";
+import { getExercisesCachedFx, getExercisesRequestFx } from "./effects";
 import {
-  combine,
-  createEffect,
-  createStore,
-  sample,
-} from 'effector';
-import { ExerciseItem, ExerciseItemStore } from '../Types';
-import {
-  getSelectedExerciseEvent, setDelayExercise, setSliderPos, setVolumeNotification, updateErrorEvent,
-} from './events';
-import exercisesRequestFacades from '../Facades/exercisesRequestFacades';
-
-const getExercisesRequestFx = createEffect(
-  async (): Promise<Array<ExerciseItem>> => {
-    const url = `${import.meta.env.VITE_GLOBAL_API}/${import.meta.env.VITE_GLOBAL_FILE}`;
-    const exercises = await fetch(url);
-    return exercises.json();
-  },
-);
+  getSelectedExerciseEvent,
+  setDelayExercise,
+  setSliderPos,
+  setVolumeNotification,
+  updateErrorEvent,
+} from "./events";
+import exercisesRequestFacades from "../Facades/exercisesRequestFacades";
 
 const $exerciseStore = createStore<ExerciseItemStore>({
   listExercise: [],
@@ -25,7 +18,17 @@ const $exerciseStore = createStore<ExerciseItemStore>({
   exerciseDelay: 0,
   volume: 100,
 })
-  .on(getExercisesRequestFx.doneData, (state, payload) => ({
+  .on(getExercisesRequestFx.doneData, (state, payload) => {
+    removeAllExercises();
+    payload.forEach((exerciseRecord: ExerciseItemRequest) =>
+      setExercise(exerciseRecord)
+    );
+    return {
+      ...state,
+      listExercise: exercisesRequestFacades(payload),
+    };
+  })
+  .on(getExercisesCachedFx.doneData, (state, payload) => ({
     ...state,
     listExercise: exercisesRequestFacades(payload),
   }))
@@ -33,7 +36,7 @@ const $exerciseStore = createStore<ExerciseItemStore>({
   .on(getSelectedExerciseEvent, (state, payload) => ({
     ...state,
     selectedExercise: state.listExercise.find(
-      ({ link }: ExerciseItem) => link === payload,
+      ({ link }: ExerciseItem) => link === payload
     ) as ExerciseItem,
   }))
   .on(setDelayExercise, (state, payload) => ({
@@ -44,14 +47,15 @@ const $exerciseStore = createStore<ExerciseItemStore>({
     ...state,
     volume: volPayload,
   }));
-const $errorStatus = createStore(false).on(updateErrorEvent, () => true);
 
-getExercisesRequestFx();
+sample({
+  clock: getExercisesCachedFx.failData,
+  target: updateErrorEvent,
+});
 
 sample({
   clock: getExercisesRequestFx.failData,
-  source: $errorStatus,
-  target: updateErrorEvent,
+  target: getExercisesCachedFx,
 });
 
 sample({
@@ -60,9 +64,11 @@ sample({
   target: setDelayExercise,
 });
 
-const $exerciseState = combine({
+const $exerciseData = combine({
   loading: getExercisesRequestFx.pending,
-  error: $errorStatus,
+  error: restore(getExercisesCachedFx.failData, null),
+  exerciseData: $exerciseStore,
 });
 
-export { $exerciseStore, $exerciseState, getExercisesRequestFx };
+export { $exerciseStore, $exerciseData, getExercisesRequestFx };
+

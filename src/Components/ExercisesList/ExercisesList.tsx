@@ -1,7 +1,6 @@
 import { useStore } from 'effector-react';
-import { useEffect } from 'react';
 import translate from '../../i18n';
-import { $exerciseState } from '../../Store/exercise';
+import { $exerciseData } from '../../Store/exercise';
 import Card from '../Card/Card';
 import style from './ExercisesList.module.css';
 import useClearSearch from '../../Hooks/useClearSearch';
@@ -10,14 +9,21 @@ import useFilterSlider from '../../Hooks/useFilterSlider';
 export default function ExercisesList() {
   const { itemWithSearchFilter, sliderPos } = useFilterSlider();
 
-  const { loading, error } = useStore($exerciseState);
+  const {
+    loading,
+    error,
+  } = useStore($exerciseData);
 
   useClearSearch('#global-search');
 
-  useEffect(() => {
-    if (error) { throw new Error(translate('NotificationText', '0x000') as string); }
-  }, [error]);
-
+  if (error) {
+    throw new Error(
+      `${translate(
+        'NotificationText',
+        error.message,
+      )}<br /><b>Код ошибки:</b> ${error.message}` as string,
+    );
+  }
   if (loading) return <p>{translate('NotificationText', '0x001') as string}</p>;
   return (
     <section className={style.listExercises}>

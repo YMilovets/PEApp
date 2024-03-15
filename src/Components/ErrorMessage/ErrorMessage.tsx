@@ -8,7 +8,7 @@ function ErrorMessage({ error: { message } }: ErrorMessageProps) {
   const handleClickReloadPage = useCallback(() => window.location.reload(), []);
   return (
     <div className={style.errorContainer}>
-      <p>{message}</p>
+      <p dangerouslySetInnerHTML={{ __html: message }} />
       <Button onClick={handleClickReloadPage}>
         {translate('NotificationText', 'reloadPageBtn') as string}
       </Button>

@@ -7,5 +7,6 @@ export default defineConfig({
   plugins: [],
   build: {
     outDir: 'build',
+    target: "es2022"
   },
 });

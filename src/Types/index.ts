@@ -1,3 +1,5 @@
+import { HTMLInputTypeAttribute } from 'react';
+
 type ExerciseItem = {
   img: string;
   title: string;
@@ -37,3 +39,21 @@ type TranslateProp = string | number;
 type TranslateValue = TranslateProp;
 
 export type { ExerciseItem, TranslateProp, TranslateValue };
+
+export type CommonFormElementType = {
+  label: string;
+  description?: string;
+  id: string;
+  type?: HTMLInputTypeAttribute;
+  required?: boolean;
+  name: string;
+  value?: string | number;
+}
+
+export type NumberInputFormElementType = {
+  min?: number,
+  max?: number,
+  step?: number,
+}
+
+export type FormConstructorType = CommonFormElementType & NumberInputFormElementType;

@@ -55,24 +55,27 @@ export default function Header() {
           <div className={style.navigationMotto}>Движение - жизнь</div>
         </div>
 
-        <InputGroup onSubmit={(e) => e.preventDefault()}>
-          <InputLabel linkedId="global-search" position="left">
-            Найти упражнение
-          </InputLabel>
-          <Input
-            className={style.searchInput}
-            id="global-search"
-            name="global-search"
-            type="text"
-            onChange={handleChange}
-          />
-          <SearchIcon
-            className={style.searchInputIcon}
-            width={24}
-            height={24}
-            style={{ '--icon-fill-color': 'var(--ui-blue-magenta-100)' }}
-          />
-        </InputGroup>
+        <form className={style.searchInputForm} onSubmit={(e) => e.preventDefault()}>
+          <InputGroup className={style.searchInputGroup}>
+            <InputLabel linkedId="global-search" position="left">
+              Найти упражнение
+            </InputLabel>
+            <Input
+              className={style.searchInput}
+              id="global-search"
+              name="global-search"
+              type="text"
+              onChange={handleChange}
+            />
+            <SearchIcon
+              className={style.searchInputIcon}
+              width={24}
+              height={24}
+              style={{ '--icon-fill-color': 'var(--ui-blue-magenta-100)' }}
+            />
+          </InputGroup>
+        </form>
+
         <div className={style.sliderManager}>
           <ButtonWrapper>
             <Button
@@ -103,6 +106,9 @@ export default function Header() {
         <ul className={style.collapseMenuBar}>
           <li className="nav-item mx-4">
             <NavLink to="about">О приложении</NavLink>
+          </li>
+          <li>
+            <NavLink to="new">Добавить упражнение</NavLink>
           </li>
         </ul>
       </nav>

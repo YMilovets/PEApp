@@ -54,3 +54,11 @@
   align-self: center;
   padding: 0 0.5em 0 0.4em;
 }
+
+.searchInputForm {
+  display: flex;
+}
+
+.searchInputGroup {
+  flex: 1;
+}

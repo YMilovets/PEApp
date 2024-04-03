@@ -1,8 +1,9 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { AriaAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
 
-interface ButtonProp extends ButtonHTMLAttributes<HTMLButtonElement> {
-    status?: 'primary' | 'secondary' | 'link';
-    isDisabled?: boolean;
+interface ButtonProp
+  extends ButtonHTMLAttributes<HTMLButtonElement & AriaAttributes> {
+  status?: 'primary' | 'secondary' | 'link';
+  isDisabled?: boolean;
 }
 
 interface ButtonWrapperProps {

@@ -14,6 +14,9 @@ function Input({
   value,
   defaultValue,
   disabled,
+  step,
+  required,
+  'aria-describedby': describedBy,
 }: InputProps) {
   return (
     <input
@@ -28,6 +31,9 @@ function Input({
       max={max}
       defaultValue={defaultValue}
       disabled={disabled}
+      step={step}
+      required={required}
+      aria-describedby={describedBy}
     />
   );
 }

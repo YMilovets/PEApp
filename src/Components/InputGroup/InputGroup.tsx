@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { InputGroupProps } from './InputGroup.type';
 import style from './InputGroup.module.css';
 
-function InputGroup({ children, className, onSubmit }: InputGroupProps) {
+function InputGroup({ children, className }: InputGroupProps) {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocusInput = useCallback(() => {
     setIsFocused(true);
@@ -13,16 +13,15 @@ function InputGroup({ children, className, onSubmit }: InputGroupProps) {
   }, []);
 
   return (
-    <form
+    <div
       onFocus={handleFocusInput}
       onBlur={handleBlurInput}
-      onSubmit={onSubmit}
       className={clsx(style.inputGroup, className, {
         [style.inputGroupFocused]: isFocused,
       })}
     >
       {children}
-    </form>
+    </div>
   );
 }
 

@@ -1,19 +1,36 @@
 import clsx from 'clsx';
+import { createElement } from 'react';
 import { ButtonProp } from './Button.type';
 import style from './Button.module.css';
 
 function Button({
-  children, onClick, className, disabled,
+  children, onClick, className, disabled, type, tabIndex, 'aria-label': ariaLabel,
 }: ButtonProp) {
-  return (
-    <button
-      disabled={disabled}
-      className={clsx(style.button, className)}
-      onClick={onClick}
-      type="button"
-    >
-      {children}
-    </button>
+  const settingButton = {
+    disabled,
+    className: clsx(style.button, className),
+    onClick,
+    tabIndex,
+    'aria-label': ariaLabel,
+  };
+  if (type === 'reset') {
+    return createElement('input', {
+      ...settingButton,
+      type: 'reset',
+      value: children?.toString(),
+    });
+  }
+  if (type === 'submit') {
+    return createElement(
+      'button',
+      { ...settingButton, type: 'submit' },
+      children,
+    );
+  }
+  return createElement(
+    'button',
+    { ...settingButton, type: 'button' },
+    children,
   );
 }
 

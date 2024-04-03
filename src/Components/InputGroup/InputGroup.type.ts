@@ -3,6 +3,7 @@ import {
   InputHTMLAttributes,
   FormHTMLAttributes,
   LabelHTMLAttributes,
+  AriaAttributes,
 } from 'react';
 
 interface InputGroupProps extends FormHTMLAttributes<HTMLFormElement> {
@@ -10,7 +11,8 @@ interface InputGroupProps extends FormHTMLAttributes<HTMLFormElement> {
   className?: string;
 }
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps
+  extends InputHTMLAttributes<HTMLInputElement & AriaAttributes> {
   className?: string;
 }
 

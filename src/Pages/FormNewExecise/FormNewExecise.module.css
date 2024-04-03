@@ -1,0 +1,47 @@
+.formCaption {
+    margin: 0;
+}
+
+.formGroup {
+    height: 50px;
+    box-sizing: border-box;
+    width: auto;
+    margin-bottom: 0.55rem;
+    background: var(--root-color-light);
+}
+
+.formManagerBtn {
+    display: flex;
+    margin-top: 0.55em;
+    gap: 0.55em
+}
+
+.formAuthBtn {
+    flex: 1;
+}
+
+.formAuthManager {
+    margin-top: 1em;
+    display: flex;
+    gap: 1em
+}
+
+.formAuthContainer {
+    flex: 1;
+}
+
+.formLabel {
+    --input-label-background: var(--ui-blue-magenta-40);
+    color: var(--root-text-color);
+    justify-content: left;
+    padding: 0 0.75em;
+    flex-basis: auto;
+}
+
+.formBtn {
+    background: var(--root-color-light);
+}
+
+.formBtnReset {
+    background: var(--ui-blue-magenta-100-62);
+}

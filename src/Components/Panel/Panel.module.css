@@ -1,0 +1,13 @@
+.panel_content {
+    padding: 0 2.5em 2.5em;
+    background: var(--ui-background-light);
+}
+
+.panel_content_header {
+    padding: 2.5em 0 0;
+}
+
+.panel_content_title {
+    margin: 0 0 0.1em;
+    font: bold 2.5em/1em var(--root-font-family);
+}

@@ -1,3 +1,5 @@
+import { MutableRefObject } from 'react';
+
 export type TimerProps = {
   initialTime: number;
   stepTime?: number;
@@ -30,3 +32,14 @@ export type AudioProps = Array<{
   excludedStatus?: Array<CycleStatus>;
   includedStatus?: Array<CycleStatus>;
 }>;
+
+export type OutsideClickProps = Partial<{
+  excluded: Array<MutableRefObject<HTMLElement | null>>;
+  onClick: () => void;
+}>
+
+export type SendFromProps = {
+  formAddParams: FormData | null;
+  onSend: () => void;
+  image?: Blob | null,
+};

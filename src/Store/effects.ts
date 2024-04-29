@@ -35,3 +35,18 @@ export const sendNewExercise = createEffect(
     return result.json();
   },
 );
+
+export const sendNewImageExercise = createEffect(
+  async ({ formData, token }: { formData: FormData | null; token: string }) => {
+    const url = `${import.meta.env.VITE_LOCAL_API}/imageload`;
+
+    const result = await fetch(url, {
+      method: 'POST',
+      body: formData,
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+      }),
+    });
+    return result.json();
+  },
+);

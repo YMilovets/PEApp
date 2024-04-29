@@ -1,15 +1,17 @@
-import { combine, createStore, restore, sample } from "effector";
-import { ExerciseItem, ExerciseItemRequest, ExerciseItemStore } from "../Types";
-import { removeAllExercises, setExercise } from "./database";
-import { getExercisesCachedFx, getExercisesRequestFx } from "./effects";
+import {
+  combine, createStore, restore, sample,
+} from 'effector';
+import { ExerciseItem, ExerciseItemRequest, ExerciseItemStore } from '../Types';
+import { removeAllExercises, setExercise } from './database';
+import { getExercisesCachedFx, getExercisesRequestFx, sendNewExercise } from './effects';
 import {
   getSelectedExerciseEvent,
   setDelayExercise,
   setSliderPos,
   setVolumeNotification,
   updateErrorEvent,
-} from "./events";
-import exercisesRequestFacades from "../Facades/exercisesRequestFacades";
+} from './events';
+import exercisesRequestFacades from '../Facades/exercisesRequestFacades';
 
 const $exerciseStore = createStore<ExerciseItemStore>({
   listExercise: [],
@@ -20,9 +22,7 @@ const $exerciseStore = createStore<ExerciseItemStore>({
 })
   .on(getExercisesRequestFx.doneData, (state, payload) => {
     removeAllExercises();
-    payload.forEach((exerciseRecord: ExerciseItemRequest) =>
-      setExercise(exerciseRecord)
-    );
+    payload.forEach((exerciseRecord: ExerciseItemRequest) => setExercise(exerciseRecord));
     return {
       ...state,
       listExercise: exercisesRequestFacades(payload),
@@ -36,7 +36,7 @@ const $exerciseStore = createStore<ExerciseItemStore>({
   .on(getSelectedExerciseEvent, (state, payload) => ({
     ...state,
     selectedExercise: state.listExercise.find(
-      ({ link }: ExerciseItem) => link === payload
+      ({ link }: ExerciseItem) => link === payload,
     ) as ExerciseItem,
   }))
   .on(setDelayExercise, (state, payload) => ({
@@ -64,6 +64,8 @@ sample({
   target: setDelayExercise,
 });
 
+sample({ clock: sendNewExercise.doneData, target: getExercisesRequestFx });
+
 const $exerciseData = combine({
   loading: getExercisesRequestFx.pending,
   error: restore(getExercisesCachedFx.failData, null),
@@ -71,4 +73,3 @@ const $exerciseData = combine({
 });
 
 export { $exerciseStore, $exerciseData, getExercisesRequestFx };
-

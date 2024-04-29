@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import style from './Modal.module.css';
 import { ModalProps } from './Modal.type';
 import { CloseIcon } from '../Icons';
 import Button from '../Button';
+import useOutsideClick from '../../Hooks/useOutsideClick';
 
 function Modal({ children, header, onClose }: ModalProps) {
   useEffect(() => {
@@ -11,9 +12,12 @@ function Modal({ children, header, onClose }: ModalProps) {
       document.body.style.overflow = 'auto';
     };
   }, []);
+  const modalContainer = useRef(null);
+  useOutsideClick({ onClick: onClose, excluded: [modalContainer] });
   return (
     <div className={style.modalContainer}>
       <section
+        ref={modalContainer}
         className={style.modal}
         aria-labelledby="formTitle"
         role="dialog"

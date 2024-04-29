@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import {
-  FormEvent, Fragment, useCallback, useState,
+  FormEvent, useCallback, useState,
 } from 'react';
 import Panel from '../../Components/Panel/Panel';
 import { Input, InputGroup, InputLabel } from '../../Components/InputGroup';
@@ -10,32 +10,44 @@ import style from './FormNewExecise.module.css';
 import Portal from '../../Components/Portal';
 import ModalAuth from '../../Components/ModalAuth';
 import formConstructor from './constants';
-import useSendForm from './utils';
+import translate from '../../i18n';
+import useClipboard from '../../Hooks/useClipboard';
+import useSendForm from '../../Hooks/useSendForm';
 
 function FormNewExecise() {
   const [sendParams, setSendParams] = useState<FormData | null>(null);
   const [isModalActive, setIsModalActive] = useState(false);
+  const [image, setImage] = useState<Blob | null>(null);
+  const [fileName, setFileName] = useState('');
+
+  const {
+    onSignAuth,
+    modalError: authError,
+    formMessage: message,
+    addFormRef,
+    setAuthError,
+    setFormMessage,
+  } = useSendForm({ formAddParams: sendParams, onSend: () => setIsModalActive(false), image });
 
   const onSendExercise = useCallback((e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
 
+    setFormMessage('');
     setSendParams(formData);
     setIsModalActive(true);
   }, []);
 
-  const {
-    onSignAuth,
-    modalError: authError,
-    formError: error,
-    addFormRef,
-    setAuthError,
-  } = useSendForm({ formAddParams: sendParams, onSend: () => setIsModalActive(false) });
+  const handleCopyClick = useClipboard(setImage, setFormMessage);
 
   return (
     <Panel title="Добавить новое упражнение">
-      <form ref={addFormRef} onSubmit={onSendExercise}>
-        <p role="alert">{error}</p>
+      <form className={style.form} ref={addFormRef} onSubmit={onSendExercise}>
+        {message && (
+          <p className={style.formItemAlert} role="alert">
+            {message}
+          </p>
+        )}
         {formConstructor.map(
           ({
             id,
@@ -49,7 +61,12 @@ function FormNewExecise() {
             value,
             step,
           }) => (
-            <Fragment key={id}>
+            <div
+              className={clsx(style.formItem, {
+                [style.formItemLast]: id === 'img-exercise',
+              })}
+              key={id}
+            >
               <small
                 id={`label-description-${id}`}
                 className={style.formCaption}
@@ -65,7 +82,9 @@ function FormNewExecise() {
                   {label}
                 </InputLabel>
                 <Input
-                  className={style.formInput}
+                  className={clsx(style.formInput, {
+                    [style.formInputFile]: type === 'file',
+                  })}
                   type={type}
                   id={id}
                   required={required}
@@ -75,9 +94,33 @@ function FormNewExecise() {
                   defaultValue={value}
                   step={step}
                   aria-describedby={`label-description-${id}`}
+                  onChange={(e) => {
+                    if (type === 'file') {
+                      setFileName(Array.from(
+                        e.currentTarget.files ?? [],
+                      )[0].name);
+                      setImage(null);
+                      setFormMessage('');
+                    }
+                  }}
                 />
+                {type === 'file' && (
+                  <>
+                    <span
+                      className={style.formInputLabelFile}
+                    >
+                      {image ? translate('NotificationText', '0x007').toString() : fileName}
+                    </span>
+                    <Button
+                      className={style.formInputCopyBtn}
+                      onClick={handleCopyClick}
+                    >
+                      Скопировать из буфера обмена
+                    </Button>
+                  </>
+                )}
               </InputGroup>
-            </Fragment>
+            </div>
           ),
         )}
         <div className={style.formManagerBtn}>
@@ -85,11 +128,7 @@ function FormNewExecise() {
             <Button type="submit">Отправить</Button>
           </ButtonWrapper>
           <ButtonWrapper className={style.formBtn}>
-            <Button
-              tabIndex={-1}
-              className={style.formBtnReset}
-              type="reset"
-            >
+            <Button tabIndex={-1} className={style.formBtnReset} type="reset">
               Очистить форму
             </Button>
           </ButtonWrapper>

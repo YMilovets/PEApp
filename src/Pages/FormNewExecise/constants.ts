@@ -76,11 +76,10 @@ const formConstructor: Array<FormConstructorType> = [
   },
   {
     id: 'img-exercise',
-    label: 'Название файла',
+    label: 'Выбрать файл упражнения',
     description: 'Укажите путь до картинки упражнения',
-    type: 'text',
-    name: 'img',
-    required: true,
+    type: 'file',
+    name: 'file',
   },
 ];
 

@@ -1,12 +1,13 @@
 {
   "name": "peappmodern",
   "private": true,
-  "version": "4.1.0-26",
+  "version": "4.2.1-27",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "api": "json-server --watch ./src/Mock/api.json --port 4002",
+    "build-api": "cd /home/yan/www/local/peapp_api/storageJSON && ./publish.sh",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "gh-pages -d build"

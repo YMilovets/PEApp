@@ -13,6 +13,8 @@ type ExerciseItem = {
   timePause?: number;
   delta_time?: number;
   deltaTime?: number;
+  delay_exercise: number;
+  startDelay: number;
 };
 
 export type ExerciseItemRequest = {

@@ -22,6 +22,7 @@ function ModalAuth({
         <p
           aria-label="Сообщение об ошибке"
           role="alert"
+          aria-live="assertive"
           dangerouslySetInnerHTML={{ __html: errorMsg }}
         />
       )}
@@ -44,6 +45,7 @@ function ModalAuth({
             required
             name="login"
             aria-describedby="loginLabel"
+            autoComplete="nickname"
           />
         </InputGroup>
 
@@ -65,6 +67,7 @@ function ModalAuth({
             required
             name="password"
             aria-describedby="passLabel"
+            autoComplete="current-password"
           />
         </InputGroup>
         <div className={style.formAuthManager}>

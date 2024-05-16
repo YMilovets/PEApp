@@ -17,6 +17,7 @@ function Input({
   step,
   required,
   'aria-describedby': describedBy,
+  autoComplete,
 }: InputProps) {
   return (
     <input
@@ -34,6 +35,7 @@ function Input({
       step={step}
       required={required}
       aria-describedby={describedBy}
+      autoComplete={autoComplete}
     />
   );
 }

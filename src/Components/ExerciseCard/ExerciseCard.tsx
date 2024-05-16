@@ -96,7 +96,7 @@ export default function ExerciseCard({
                   type="number"
                   min="0"
                   max="10"
-                  defaultValue="0"
+                  value={exerciseDelay}
                   id="time-delay-exercise"
                   onChange={handleChangeDelay}
                   disabled={

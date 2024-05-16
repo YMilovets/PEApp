@@ -33,12 +33,16 @@ const $exerciseStore = createStore<ExerciseItemStore>({
     listExercise: exercisesRequestFacades(payload),
   }))
   .on(setSliderPos, (state, payload) => ({ ...state, sliderPos: payload }))
-  .on(getSelectedExerciseEvent, (state, payload) => ({
-    ...state,
-    selectedExercise: state.listExercise.find(
+  .on(getSelectedExerciseEvent, (state, payload) => {
+    const findSelectedExercise: ExerciseItem = state.listExercise.find(
       ({ link }: ExerciseItem) => link === payload,
-    ) as ExerciseItem,
-  }))
+    ) ?? state.listExercise[0];
+    return {
+      ...state,
+      selectedExercise: findSelectedExercise,
+      exerciseDelay: findSelectedExercise?.delay_exercise ?? 0,
+    };
+  })
   .on(setDelayExercise, (state, payload) => ({
     ...state,
     exerciseDelay: payload,
@@ -56,12 +60,6 @@ sample({
 sample({
   clock: getExercisesRequestFx.failData,
   target: getExercisesCachedFx,
-});
-
-sample({
-  clock: getSelectedExerciseEvent,
-  fn: () => 0,
-  target: setDelayExercise,
 });
 
 sample({ clock: sendNewExercise.doneData, target: getExercisesRequestFx });

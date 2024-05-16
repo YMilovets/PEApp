@@ -13,6 +13,7 @@ import formConstructor from './constants';
 import translate from '../../i18n';
 import useClipboard from '../../Hooks/useClipboard';
 import useSendForm from '../../Hooks/useSendForm';
+import { PasteIcon } from '../../Components/Icons';
 
 function FormNewExecise() {
   const [sendParams, setSendParams] = useState<FormData | null>(null);
@@ -44,7 +45,7 @@ function FormNewExecise() {
     <Panel title="Добавить новое упражнение">
       <form className={style.form} ref={addFormRef} onSubmit={onSendExercise}>
         {message && (
-          <p className={style.formItemAlert} role="alert">
+          <p className={style.formItemAlert} role="alert" aria-live="assertive">
             {message}
           </p>
         )}
@@ -96,9 +97,9 @@ function FormNewExecise() {
                   aria-describedby={`label-description-${id}`}
                   onChange={(e) => {
                     if (type === 'file') {
-                      setFileName(Array.from(
-                        e.currentTarget.files ?? [],
-                      )[0].name);
+                      setFileName(
+                        Array.from(e.currentTarget.files ?? [])[0].name,
+                      );
                       setImage(null);
                       setFormMessage('');
                     }
@@ -106,16 +107,17 @@ function FormNewExecise() {
                 />
                 {type === 'file' && (
                   <>
-                    <span
-                      className={style.formInputLabelFile}
-                    >
-                      {image ? translate('NotificationText', '0x007').toString() : fileName}
+                    <span className={style.formInputLabelFile}>
+                      {image
+                        ? translate('NotificationText', '0x007').toString()
+                        : fileName}
                     </span>
                     <Button
                       className={style.formInputCopyBtn}
                       onClick={handleCopyClick}
                     >
-                      Скопировать из буфера обмена
+                      <PasteIcon />
+                      {translate('ExerciseText', 'pasteButton').toString()}
                     </Button>
                   </>
                 )}
@@ -125,11 +127,13 @@ function FormNewExecise() {
         )}
         <div className={style.formManagerBtn}>
           <ButtonWrapper className={style.formBtn}>
-            <Button type="submit">Отправить</Button>
+            <Button type="submit">
+              {translate('ExerciseText', 'sendButton').toString()}
+            </Button>
           </ButtonWrapper>
           <ButtonWrapper className={style.formBtn}>
             <Button tabIndex={-1} className={style.formBtnReset} type="reset">
-              Очистить форму
+              {translate('ExerciseText', 'clearButton').toString()}
             </Button>
           </ButtonWrapper>
         </div>

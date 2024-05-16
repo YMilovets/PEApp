@@ -1,4 +1,4 @@
-.menuIcon, .forwardIcon, .backwardIcon, .startIcon, .pauseIcon, .closeIcon {
+.menuIcon, .forwardIcon, .backwardIcon, .startIcon, .pauseIcon, .closeIcon, .pasteIcon {
   --icon-fill-color: var(--root-color-light);
   fill: var(--icon-fill-color);
 }

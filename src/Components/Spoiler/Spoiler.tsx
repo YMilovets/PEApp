@@ -1,30 +1,45 @@
-import { useCallback, useState } from 'react';
-import clsx from 'clsx';
-import Button from '../Button';
-import SpoilerProps from './Spoiler.type';
+import {
+  forwardRef,
+  ForwardRefRenderFunction,
+  RefObject,
+  useCallback,
+  useState,
+} from "react";
+import clsx from "clsx";
+import Button from "../Button";
+import SpoilerProps from "./Spoiler.type";
 
-import spoilerStyle from './Spoiler.module.css';
+import spoilerStyle from "./Spoiler.module.css";
 
-function Spoiler({
-  children,
-  className,
-  caption,
-  style,
-  captionRenderFn,
-}: SpoilerProps) {
+function Spoiler(
+  {
+    children,
+    className,
+    caption,
+    style,
+    captionRenderFn,
+    onClick,
+  }: SpoilerProps,
+  ref: RefObject<HTMLDivElement>
+) {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const handleClick = useCallback(() => setIsActive(!isActive), [isActive]);
+  const handleClick = useCallback(() => {
+    onClick?.();
+    setIsActive(!isActive);
+  }, [isActive]);
   return (
     <article style={style} className={clsx(className, spoilerStyle.spoiler)}>
       {(
         <div
-          style={{ width: 'max-content' }}
+          style={{ width: "max-content" }}
           role="button"
           tabIndex={-1}
           onKeyDown={(e) => {
             e.preventDefault();
           }}
           onClick={handleClick}
+          ref={ref}
+          aria-hidden={!captionRenderFn}
         >
           {captionRenderFn}
         </div>
@@ -44,4 +59,7 @@ function Spoiler({
   );
 }
 
-export default Spoiler;
+export default forwardRef(
+  Spoiler as ForwardRefRenderFunction<HTMLElement, SpoilerProps>
+);
+

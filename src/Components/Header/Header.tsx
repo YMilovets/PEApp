@@ -110,6 +110,9 @@ export default function Header() {
           <li>
             <NavLink to="new">Добавить упражнение</NavLink>
           </li>
+          <li>
+            <NavLink to="execute">Настроить автозапуск упражнений</NavLink>
+          </li>
         </ul>
       </nav>
     </header>

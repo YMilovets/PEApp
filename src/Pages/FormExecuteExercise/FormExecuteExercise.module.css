@@ -1,0 +1,125 @@
+.executePage {
+  display: grid;
+}
+
+.executePageManager {
+  display: flex;
+  gap: 1em;
+}
+
+.executePageImage {
+  height: 6rem;
+}
+
+.executePageItem {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: 10rem 1fr 2rem;
+}
+
+.executePageImageContainer {
+  height: 6rem;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.executePageContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: 0.8125em;
+}
+
+.executePageTitle {
+  margin: 0;
+  font-size: 1.231em;
+}
+
+.executePageSpoilerLabel {
+  color: var(--ui-blue-magenta-100);
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  font: 0.825em var(--root-font-family);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  --button-background-active: transparent;
+  --button-background: transparent;
+  box-shadow: none;
+}
+
+.executePageSpoilerLabel.executePageSpoilerLabelSticky {
+  top: 0;
+  position: sticky;
+}
+
+.executePageSpoilerLabel:hover {
+  text-decoration: underline;
+}
+
+.executePageList {
+  margin-bottom: 2rem;
+  overflow: auto;
+  scrollbar-width: thin;
+  max-height: inherit;
+  margin: 0 0 2rem;
+  background: var(--ui-background-light);
+  padding: 0.25em;
+}
+
+.executePageSpoilerContainer {
+  background: var(--ui-background-light);
+  margin-bottom: 1.25rem;
+  top: 1em;
+  position: sticky;
+  height: max-content;
+}
+
+.executePageSelector {
+  background: var(--ui-background-light);
+}
+
+.executePageContainer {
+  display: grid;
+  transition: 0.5s;
+  grid-template-columns: 0 1fr;
+  transition: 0.5s;
+  gap: 0;
+}
+
+.executePageContainer.executePageContainerSpoilered {
+  grid-template-columns: 255px 1fr;
+  gap: 2em;
+  transition: 0.5s;
+}
+
+.executePageSelectedExercises.executePageSelectedList {
+  margin-top: 1em;
+  height: max-content;
+}
+
+.executePageScrollBtn {
+  position: fixed;
+  bottom: 2.857em;
+  right: 2.857em;
+}
+
+.executePageDragBtn {
+  --button-background-active: transparent;
+  --button-background: transparent;
+  box-shadow: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.executePageDragBtnIcon {
+  --icon-fill-color: var(--ui-blue-magenta-30);
+  pointer-events: none;
+}
+
+.executePageDragBtn:hover .executePageDragBtnIcon {
+  --icon-fill-color: var(--ui-blue-magenta-60);
+}

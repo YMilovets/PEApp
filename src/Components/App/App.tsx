@@ -1,9 +1,10 @@
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import NotFoundPage from '../../Pages/NotFoundPage';
-import ExercisesList from '../ExercisesList/ExercisesList';
-import Layout from '../Layout';
-import Exercise from '../../Pages/Exercise';
-import FormNewExecise from '../../Pages/FormNewExecise';
+import { HashRouter, Route, Routes } from "react-router-dom";
+import NotFoundPage from "../../Pages/NotFoundPage";
+import ExercisesList from "../ExercisesList/ExercisesList";
+import Layout from "../Layout";
+import Exercise from "../../Pages/Exercise";
+import FormNewExecise from "../../Pages/FormNewExecise";
+import FormExecuteExercise from "../../Pages/FormExecuteExercise";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="exercise/:id" element={<Exercise />} />
           <Route path="new" element={<FormNewExecise />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="execute" element={<FormExecuteExercise />} />
         </Route>
       </Routes>
     </HashRouter>

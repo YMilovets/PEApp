@@ -12,6 +12,11 @@ const setVolumeNotification = createEvent<number>();
 const setSelectedExercise = createEvent<ExerciseItem>();
 const clearExercise = createEvent();
 
+const setOrderExercise = createEvent<{
+  dragElementId: string;
+  dropElementId: string;
+}>();
+
 export {
   getSelectedExerciseEvent,
   updateErrorEvent,
@@ -20,4 +25,5 @@ export {
   setVolumeNotification,
   setSelectedExercise,
   clearExercise,
+  setOrderExercise
 };

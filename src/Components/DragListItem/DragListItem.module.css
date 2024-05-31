@@ -1,0 +1,58 @@
+.executePageItem {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: 10rem 1fr 2rem;
+  cursor: grab;
+  padding: 0.625em;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(223, 223, 223, 0.35);
+  -moz-box-shadow: 0px 0px 4px 2px rgba(223, 223, 223, 0.35);
+  box-shadow: 0px 0px 4px 2px rgba(223, 223, 223, 0.35);
+  border-radius: 0.5rem;
+  transition: box-shadow 0.5s ease;
+}
+
+.executePageItem.executePageItemEntered {
+  -webkit-box-shadow: 0px 0px 4px 2px var(--ui-blue-magenta-30);
+  -moz-box-shadow: 0px 0px 4px 2px var(--ui-blue-magenta-30);
+  box-shadow: 0px 0px 4px 2px var(--ui-blue-magenta-30);
+  transition: box-shadow 0.5s ease;
+}
+
+.executePageImageContainer {
+  height: 6rem;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.executePageContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: 0.8125em;
+}
+
+.executePageDragBtn {
+  --button-background-active: transparent;
+  --button-background: transparent;
+  box-shadow: none;
+  padding: 0;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+}
+
+.executePageDragBtnIcon {
+  --icon-fill-color: var(--ui-blue-magenta-30);
+  pointer-events: none;
+}
+
+.executePageDragBtn:hover .executePageDragBtnIcon {
+  --icon-fill-color: var(--ui-blue-magenta-60);
+}
+
+.executePageTitle {
+  margin: 0;
+  font-size: 1.231em;
+}

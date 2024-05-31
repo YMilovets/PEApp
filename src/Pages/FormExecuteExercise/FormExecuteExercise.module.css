@@ -15,6 +15,8 @@
   display: grid;
   gap: 1em;
   grid-template-columns: 10rem 1fr 2rem;
+  cursor: grab;
+  padding: 0.625em;
 }
 
 .executePageImageContainer {
@@ -112,7 +114,9 @@
   --button-background: transparent;
   box-shadow: none;
   padding: 0;
-  cursor: pointer;
+  cursor: grab;
+  display: flex;
+  align-items: center;
 }
 
 .executePageDragBtnIcon {

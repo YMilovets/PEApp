@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 type SelectListData = {
   id: number | string;
-  children: ReactNode;
+  children: (headerIdAria: string, descriptionIdAria: string) => ReactNode;
 };
 
 export interface SelectListProps {

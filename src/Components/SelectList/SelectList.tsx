@@ -1,10 +1,8 @@
-import clsx from 'clsx';
-import {
-  KeyboardEvent, useCallback, useRef, useState,
-} from 'react';
-import useOutsideClick from '../../Hooks/useOutsideClick';
-import styleComponent from './SelectList.module.css';
-import { SelectListProps } from './SelectList.type';
+import clsx from "clsx";
+import { KeyboardEvent, useCallback, useRef, useState } from "react";
+import useOutsideClick from "../../Hooks/useOutsideClick";
+import styleComponent from "./SelectList.module.css";
+import { SelectListProps } from "./SelectList.type";
 
 function SelectList({
   data,
@@ -15,7 +13,7 @@ function SelectList({
   title,
 }: SelectListProps) {
   const [selectedIndexes, setSelectedIndexes] = useState<Set<number | string>>(
-    new Set(),
+    new Set()
   );
   const [selectItemId, setSelectItemId] = useState(0);
   const [isSelectedList, setIsSelectedList] = useState(false);
@@ -31,24 +29,24 @@ function SelectList({
         setSelectedIndexes(
           new Set(
             Array.from(selectedIndexes).filter(
-              (currentId) => currentId !== selectedId,
-            ),
-          ),
+              (currentId) => currentId !== selectedId
+            )
+          )
         );
       } else {
         setSelectedIndexes(
-          new Set(Array.from(selectedIndexes)).add(selectedId),
+          new Set(Array.from(selectedIndexes)).add(selectedId)
         );
       }
     },
-    [selectedIndexes],
+    [selectedIndexes]
   );
 
   const handleListSelect = useCallback(
     (status: boolean) => () => {
       if (!isDisableSelected) setIsSelectedList(status);
     },
-    [isDisableSelected],
+    [isDisableSelected]
   );
 
   const handleKeySelect = useCallback(
@@ -59,19 +57,21 @@ function SelectList({
       if (isDisableSelected) return;
 
       const { ArrowDownFn, ArrowUpFn } = {
-        ArrowUpFn: () => setSelectItemId((selectId) => {
-          if (selectId > 0) return selectId - 1;
-          return selectId;
-        }),
-        ArrowDownFn: () => setSelectItemId((selectId) => {
-          if (selectId < data.length - 1) return selectId + 1;
-          return selectId;
-        }),
+        ArrowUpFn: () =>
+          setSelectItemId((selectId) => {
+            if (selectId > 0) return selectId - 1;
+            return selectId;
+          }),
+        ArrowDownFn: () =>
+          setSelectItemId((selectId) => {
+            if (selectId < data.length - 1) return selectId + 1;
+            return selectId;
+          }),
       };
 
       const keyManager: Record<string, () => void> = {
         Escape: () => listRef.current?.blur(),
-        ' ': () => handleSelect(data[selectItemId].id)(),
+        " ": () => handleSelect(data[selectItemId].id)(),
         Enter: () => handleSelect(data[selectItemId].id)(),
         ArrowUp: ArrowUpFn,
         W: ArrowUpFn,
@@ -82,10 +82,12 @@ function SelectList({
       };
       keyManager[`${e.key[0].toUpperCase()}${e.key.slice(1)}`]?.();
     },
-    [selectItemId, data, isDisableSelected],
+    [selectItemId, data, isDisableSelected]
   );
 
   useOutsideClick({ excluded: [listRef], onClick: handleListSelect(false) });
+  const titleId = "execute-title";
+  const descriptionId = "execute-title";
 
   return (
     <ul
@@ -106,21 +108,23 @@ function SelectList({
           className={clsx(styleComponent.selectListItem, {
             [styleComponent.selectListItemSelected]: selectedIndexes?.has(id),
             [styleComponent.selectListItemChosen]:
-              isSelectedList
-              && data[selectItemId]?.id === id
-              && !selectedIndexes?.has(id),
+              isSelectedList &&
+              data[selectItemId]?.id === id &&
+              !selectedIndexes?.has(id),
             [styleComponent.selectListItemSelectedChosen]:
-              isSelectedList
-              && data[selectItemId]?.id === id
-              && selectedIndexes?.has(id),
+              isSelectedList &&
+              data[selectItemId]?.id === id &&
+              selectedIndexes?.has(id),
           })}
           key={id}
           role="option"
           aria-selected={selectedIndexes.has(id)}
           onClick={handleSelect(id, index)}
           onKeyDown={() => null}
+          aria-labelledby={`${titleId}-${id}`}
+          aria-describedby={`${descriptionId}-${id}`}
         >
-          {children}
+          {children(titleId, descriptionId)}
         </li>
       ))}
     </ul>

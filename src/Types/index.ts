@@ -59,3 +59,17 @@ export type NumberInputFormElementType = {
 }
 
 export type FormConstructorType = CommonFormElementType & NumberInputFormElementType;
+
+export type CreateNotificationType = {
+  title: string;
+  body: string;
+  viewTime?: number;
+  onClick?: () => void;
+}
+
+export type NotificationOptions = Partial<{
+  body: string;
+  icon: string;
+  vibrate: Array<number>;
+  tag: string;
+}>

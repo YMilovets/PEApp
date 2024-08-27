@@ -132,3 +132,8 @@
 .exercisePageText {
     grid-column: 1 / span 2;
 }
+
+.exercisePageMessage {
+    grid-column: 1 / span 2;
+    margin-top: 0;
+}

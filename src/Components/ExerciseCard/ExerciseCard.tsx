@@ -1,16 +1,20 @@
 import clsx from 'clsx';
-import {
-  ChangeEvent, useCallback,
-} from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { useEvent } from 'effector-react';
-import { ExerciseProps } from './ExerciseCard.type';
-import style from './ExerciseCard.module.css';
+import { useNavigate } from 'react-router-dom';
 import useCycle from '../../Hooks/useCycle';
-import { Input, InputGroup, InputLabel } from '../InputGroup';
-import { setDelayExercise, setVolumeNotification } from '../../Store/events';
-import Spoiler from '../Spoiler';
 import { CycleStatus } from '../../Hooks/types';
+
+import { Input, InputGroup, InputLabel } from '../InputGroup';
+import Spoiler from '../Spoiler';
 import ExerciseCardTimer from './ExerciseCardTimer';
+
+import createNotification from '../../Shared';
+import { setDelayExercise, setVolumeNotification } from '../../Store/events';
+
+import { ExerciseProps } from './ExerciseCard.type';
+
+import style from './ExerciseCard.module.css';
 
 export default function ExerciseCard({
   action,
@@ -24,17 +28,44 @@ export default function ExerciseCard({
   exerciseDelay,
   volume,
 }: ExerciseProps) {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState<string | null>();
+  const handleEndExercise = useCallback(async () => {
+    try {
+      setMessage(null);
+      await createNotification({
+        body: `Вы успешно выполнили упражнение "${title}"! Приступайте к новому.`,
+        title: 'Упражнение закончено',
+        onClick: () => navigate('/'),
+      });
+    } catch (error) {
+      setMessage((error as Error).message);
+    }
+  }, [navigate, title]);
+
   const {
     start, step, status, time, play,
-  } = useCycle(
-    {
-      countRepeats: countRepeat || 0,
-      timeExercise: timeProgress || 0,
-      delayExercise: exerciseDelay || 0,
-      timePause: timePause || 0,
-      deltaTime: deltaTime || 0,
-    },
-  );
+  } = useCycle({
+    countRepeats: countRepeat || 0,
+    timeExercise: timeProgress || 0,
+    delayExercise: exerciseDelay || 0,
+    timePause: timePause || 0,
+    deltaTime: deltaTime || 0,
+    onCycleOver: handleEndExercise,
+  });
+
+  const handleStartExercise = useCallback(async () => {
+    start();
+    try {
+      setMessage(null);
+      await createNotification({
+        title: 'Упражнение запущено',
+        body: `Запущено новое упражнение "${title}".`,
+      });
+    } catch (error) {
+      setMessage((error as Error).message);
+    }
+  }, [start, title]);
 
   const changeDelayExercise = useEvent(setDelayExercise);
   const handleChangeDelay = useCallback(
@@ -68,11 +99,9 @@ export default function ExerciseCard({
             '--spoiler-padding': '0.2rem 0.55rem',
             '--spoiler-border-radius': '0.45rem',
           }}
-          captionRenderFn={(
-            <p className={style.exercisePageSpoilerLabel}>
-              Настройки
-            </p>
-          )}
+          captionRenderFn={
+            <p className={style.exercisePageSpoilerLabel}>Настройки</p>
+          }
         >
           <div className={style.exercisePageSpoiler}>
             <div>
@@ -129,13 +158,18 @@ export default function ExerciseCard({
             </div>
           </div>
         </Spoiler>
+        {message && (
+          <p className={style.exercisePageMessage} role="alert">
+            {message}
+          </p>
+        )}
         <div className={style.exercisePageManager}>
           <figure className={style.exercisePageImgContainer}>
             <img className={style.exercisePageImg} src={`${img}`} alt="" />
           </figure>
           <ExerciseCardTimer
             timeProgress={timeProgress}
-            start={start}
+            start={handleStartExercise}
             step={step}
             status={status}
             time={time}
